@@ -8,8 +8,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scanner_Scene/ScannerRoom.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Plugins/FrostweepGames/WebGLFileBrowser/Examples/Example/Example.unity
-    guid: af5eda09e97d94d449b5da3bfbc1b268
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

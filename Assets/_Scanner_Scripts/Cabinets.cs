@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -54,23 +55,23 @@ public class Cabinets : MonoBehaviour
     {
         _40ModualsPanel.SetActive(false);
         _20ModualsPanel.SetActive(true);
-        OverheadsPanel.SetActive(false);
+        OverheadsPanel   .SetActive(false);
         ApplicationsPanel.SetActive(false);
     }
 
     public void SelectOverheads()
     {
-        _40ModualsPanel.SetActive(false);
-        _20ModualsPanel.SetActive(false);
-        OverheadsPanel.SetActive(true);
+        _40ModualsPanel  .SetActive(false);
+        _20ModualsPanel  .SetActive(false);
+        OverheadsPanel    .SetActive(true);
         ApplicationsPanel.SetActive(false);
     }
 
     public void SelectApplications()
     {
-        _40ModualsPanel.SetActive(false);
-        _20ModualsPanel.SetActive(false);
-        OverheadsPanel.SetActive(false);
+        _40ModualsPanel .SetActive(false);
+        _20ModualsPanel .SetActive(false);
+        OverheadsPanel  .SetActive(false);
         ApplicationsPanel.SetActive(true);
     }
 
@@ -151,6 +152,10 @@ public class Cabinets : MonoBehaviour
             InputManager.Instance.preGeneratedItem = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
             InputManager.Instance.preGeneratedItem.transform.SetParent(RoomModelManager.Instance.CabinetDesign);
             InputManager.Instance.isDragging = true;
+
+#if UNITY_EDITOR
+            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
+#endif
         }
         else
         {

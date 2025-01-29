@@ -3,6 +3,7 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using FrostweepGames.Plugins.WebGLFileBrowser;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject singleWallMenu;
     public GameObject loadingPanel;
     public GameObject NotificationmessagePanel;
+    public GameObject AreYouSureToExitDialog;
 
     private string _enteredFileExtensions;
 
@@ -22,14 +24,20 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
     }
 
     private void Start()
     {
-        openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
-
         WebGLFileBrowser.FilesWereOpenedEvent += FilesWereOpenedEventHandler;
         WebGLFileBrowser.FileOpenFailedEvent += FileOpenFailedEventHandler;
+
+#if !UNITY_EDITOR
+        openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
+#endif
+#if UNITY_EDITOR
+        RoomModelManager.Instance.gltfAsset.LoadOnStartup = true;
+#endif
 
     }
 
@@ -48,12 +56,18 @@ public class UIManager : MonoBehaviour
 
     public void BackToURL()
     {
+        AreYouSureToExitDialog.SetActive(true);
+    }
+
+    public void YesSureToExit()
+    {
         _3DRoomMenu.SetActive(false);
         singleWallMenu.SetActive(false);
         urlMenu.SetActive(true);
         Destroy(RoomModelManager.Instance.RoomModelParent.GetChild(0).gameObject);
         Destroy(DoubleClickDetector.Instance.wallCameraObject.gameObject);
         RoomModelManager.Instance.DestroyAllCabinets();
+        SceneManager.LoadScene(0);
     }
 
     public void BackTo3DRoom()

@@ -62,11 +62,12 @@ public class RoomModelManager : MonoBehaviour
         foreach (Transform item in walls)
         {
             item.gameObject.AddComponent<BoxCollider>();
+            item.gameObject.AddComponent<Wall>();
         }
 
         floorPositionY = allFloor[0].gameObject.AddComponent<BoxCollider>().bounds.center.y;
-        wallmountYPosition = floorPositionY + 1.4973f;
-        overheadYPosition = floorPositionY + 2.080293f;
+        wallmountYPosition = floorPositionY +  1.497300f;
+        overheadYPosition =  floorPositionY +  2.080293f;
         UIManager.Instance.loadingPanel.SetActive(false);
     }
 
@@ -83,6 +84,15 @@ public class RoomModelManager : MonoBehaviour
             {
                 item.gameObject.SetActive(true);
             }
+        }
+        EnableAllCabinets();
+    }
+
+    public void EnableAllCabinets()
+    {
+        foreach (Transform item in CabinetDesign)
+        {
+            item.gameObject.SetActive(true);
         }
     }
 

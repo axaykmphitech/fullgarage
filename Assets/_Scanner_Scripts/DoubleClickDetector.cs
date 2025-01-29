@@ -24,6 +24,7 @@ public class DoubleClickDetector : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 if (hit.collider.gameObject.name.Contains("wall"))
@@ -32,9 +33,13 @@ public class DoubleClickDetector : MonoBehaviour
                     {
                         selectedWall.GetComponent<Renderer>().material = normalWallMaterial;
                     }
-
                     selectedWall = hit.collider.transform;
                     hit.collider.GetComponent<Renderer>().material = selectedWallManterial;
+                }
+                else
+                {
+                    if(selectedWall != null)
+                        selectedWall.GetComponent<Renderer>().material = normalWallMaterial;
                 }
             }
         }
@@ -48,13 +53,15 @@ public class DoubleClickDetector : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                float timeSinceLastClick = Time.time - lastClickTime;
-
-                if (timeSinceLastClick <= doubleClickTime)
+                if(hit.collider.name.Contains("wall"))
                 {
-                    OnDoubleClick(hit.collider.gameObject, hit.normal);
+                    float timeSinceLastClick = Time.time - lastClickTime;
+                    if (timeSinceLastClick <= doubleClickTime)
+                    {
+                        OnDoubleClick(hit.collider.gameObject, hit.normal);
+                    }
+                    lastClickTime = Time.time;
                 }
-                lastClickTime = Time.time;
             }
         }
     }
@@ -78,7 +85,6 @@ public class DoubleClickDetector : MonoBehaviour
         selectedWall.GetComponent<Renderer>().material = normalWallMaterial;
         // Create a new GameObject for the camera
         wallCameraObject = new GameObject("OrthographicCamera");
-
         // Add a Camera component
         Camera camera = wallCameraObject.AddComponent<Camera>();
 
@@ -87,7 +93,6 @@ public class DoubleClickDetector : MonoBehaviour
         camera.backgroundColor = Color.gray;
         // Set the camera to orthographic mode
         camera.orthographic = true;
-
         // Set the orthographic size
         camera.orthographicSize = 5;
         // Make the camera look at the target object
@@ -123,9 +128,25 @@ public class DoubleClickDetector : MonoBehaviour
     {
         foreach (Transform item in RoomModelManager.Instance.RoomModelParent.transform.GetChild(0).transform)
         {
+            if(item != selectedWall && item.name.Contains("wall"))
+            {
+                item.gameObject.SetActive(false);
+            }
+        }
+        DisableOtherWallCabinets();
+    }
+
+    public void DisableOtherWallCabinets()
+    {
+        foreach (var item in RoomModelManager.Instance.walls)
+        {
             if(item != selectedWall)
             {
-                item.gameObject.SetActive(false);/////
+                foreach (var cabinet in item.GetComponent<Wall>().wallCabinets)
+                {
+                    if(cabinet != null)
+                        cabinet.SetActive(false);
+                }
             }
         }
     }

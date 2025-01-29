@@ -68,7 +68,7 @@ public class QuikOutline : MonoBehaviour
     [SerializeField]
     private Color outlineColor = Color.white;
 
-    [SerializeField, Range(0f, 10f)]
+    [SerializeField, Range(0f, 50f)]
     private float outlineWidth = 2f;
 
     [Header("Optional")]
@@ -91,7 +91,7 @@ public class QuikOutline : MonoBehaviour
 
     void Awake()
     {
-        outlineWidth = 10;
+        outlineWidth = 50;
         // Cache renderers
         renderers = GetComponentsInChildren<Renderer>();
 
@@ -114,7 +114,6 @@ public class QuikOutline : MonoBehaviour
         OutlineColor = Color.yellow;
         foreach (var renderer in renderers)
         {
-
             // Append outline shaders
             var materials = renderer.sharedMaterials.ToList();
 
