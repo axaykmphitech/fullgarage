@@ -10,6 +10,7 @@ TagManager:
   - left
   - right
   - wallmount
+  - overheads
   layers:
   - Default
   - TransparentFX

@@ -105,7 +105,7 @@ public class DoubleClickDetector : MonoBehaviour
         }
         else if (normal == new Vector3(-1, 0, 0))
         {
-            camera.transform.forward = targetObject.transform.right;
+            camera.transform.forward =  targetObject.transform.right;
             camera.transform.position = targetObject.GetComponent<Collider>().bounds.center + new Vector3(offset,0,0);
             //left
         }

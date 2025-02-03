@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class Cabinets : MonoBehaviour
 {
-
-
     [Header("UIPanel")]
     public GameObject _40ModualsPanel;
     public GameObject _20ModualsPanel;
@@ -69,10 +67,10 @@ public class Cabinets : MonoBehaviour
 
     public void SelectApplications()
     {
-        _40ModualsPanel .SetActive(false);
-        _20ModualsPanel .SetActive(false);
-        OverheadsPanel  .SetActive(false);
-        ApplicationsPanel.SetActive(true);
+        _40ModualsPanel  .SetActive(false);
+        _20ModualsPanel  .SetActive(false);
+        OverheadsPanel   .SetActive(false);
+        ApplicationsPanel .SetActive(true);
     }
 
     public void SelectCabinet(string name)
@@ -153,9 +151,9 @@ public class Cabinets : MonoBehaviour
             InputManager.Instance.preGeneratedItem.transform.SetParent(RoomModelManager.Instance.CabinetDesign);
             InputManager.Instance.isDragging = true;
 
-#if UNITY_EDITOR
-            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
-#endif
+//#if UNITY_EDITOR
+//            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
+//#endif
         }
         else
         {

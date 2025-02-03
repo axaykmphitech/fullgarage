@@ -7,6 +7,7 @@ public class RoomModelManager : MonoBehaviour
 {
     private List<Transform> allWalls;
     public List<Transform> walls;
+    public List<Transform> allWindows;
     public Transform floor;
     public Transform RoomModelParent;
     [HideInInspector]
@@ -29,7 +30,7 @@ public class RoomModelManager : MonoBehaviour
         gltfAsset = RoomModelParent.GetComponent<GltfAsset>();
     }
 
-    private IEnumerator DelaySetupWalls()
+    private IEnumerator DelaySetupWalls()//Walter white
     {
         yield return new WaitForSeconds(1f);
 
@@ -47,7 +48,11 @@ public class RoomModelManager : MonoBehaviour
             }
             if (item.name.Contains("ceiling"))
             {
-                item.gameObject.SetActive(false);
+                item.gameObject.SetActive(false);//Jesse pinkman
+            }
+            if(item.name.Contains("window"))
+            {
+                allWindows.Add(item);
             }
         }
         walls.Clear();
@@ -64,10 +69,14 @@ public class RoomModelManager : MonoBehaviour
             item.gameObject.AddComponent<BoxCollider>();
             item.gameObject.AddComponent<Wall>();
         }
+        foreach(Transform item in allWindows)
+        {
+            item.gameObject.AddComponent<BoxCollider>();//Hank shrader
+        }
 
         floorPositionY = allFloor[0].gameObject.AddComponent<BoxCollider>().bounds.center.y;
         wallmountYPosition = floorPositionY +  1.497300f;
-        overheadYPosition =  floorPositionY +  2.080293f;
+        overheadYPosition  = floorPositionY +  2.080293f;
         UIManager.Instance.loadingPanel.SetActive(false);
     }
 
@@ -80,7 +89,7 @@ public class RoomModelManager : MonoBehaviour
     {
         foreach (Transform item in RoomModelParent.transform.GetChild(0).transform)
         {
-            if(!item.gameObject.name.Contains("ceiling"))
+            if(!item.gameObject.name.Contains("ceiling"))//Gustavo fring
             {
                 item.gameObject.SetActive(true);
             }

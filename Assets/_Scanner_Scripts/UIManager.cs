@@ -24,13 +24,12 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
     }
 
     private void Start()
     {
         WebGLFileBrowser.FilesWereOpenedEvent += FilesWereOpenedEventHandler;
-        WebGLFileBrowser.FileOpenFailedEvent += FileOpenFailedEventHandler;
+        WebGLFileBrowser.FileOpenFailedEvent +=  FileOpenFailedEventHandler ;
 
 #if !UNITY_EDITOR
         openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
@@ -38,7 +37,6 @@ public class UIManager : MonoBehaviour
 #if UNITY_EDITOR
         RoomModelManager.Instance.gltfAsset.LoadOnStartup = true;
 #endif
-
     }
 
     private void OnDestroy()
@@ -80,7 +78,6 @@ public class UIManager : MonoBehaviour
         Destroy(DoubleClickDetector.Instance.wallCameraObject.gameObject);
     }
 
-
     private void FilesWereOpenedEventHandler(File[] files)
     {
         _loadedFiles = files;
@@ -95,7 +92,6 @@ public class UIManager : MonoBehaviour
 
     private void FileOpenFailedEventHandler(string error)
     {
-        Debug.Log(error);
         loadingPanel.SetActive(false);
     }
 

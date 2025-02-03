@@ -7,7 +7,7 @@ public class WallCamera : MonoBehaviour
     private float zoomSpeed = 5f;
     private float minZoom = 2f;
     private float maxZoom = 10f;
-    private float panSpeed = 50f;
+    private float panSpeed = 15f;
 
     private void Start()
     {

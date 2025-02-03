@@ -18,21 +18,21 @@ public class DraggableItem : MonoBehaviour
     public List<GameObject> NonConnectedParts;
     public List<GameObject> ConnectedParts;
 
+    public GameObject[] _40inWallMountHighlight;
+    public GameObject[] _20inLeftWallMountHighlight;
+    public GameObject[] _20inRightWallMountHighlight;
+
+    [Space(15)]
+    public GameObject[] _40inOverheadHighlight;
+    public GameObject[] _60inOverheadHighlight;
+    public GameObject[] _80inOverheadhighlight;
+
+    [Space(15)]
     public Material YellowHighlightPart;
     public Material GreenHighlightPart;
 
     private float lastClickTime = 0f;
     private float doubleClickThreshold = 0.3f;
-
-    //private void OnMouseDown()
-    //{
-    //    if (DoubleClickDetector.Instance.isWallOpen)
-    //    {
-    //        InputManager.Instance.preGeneratedItem = gameObject;
-    //        InputManager.Instance.isDragging = true;
-    //        UpdateConnections();
-    //    }
-    //}
 
     private void OnMouseDown()
     {
@@ -44,6 +44,7 @@ public class DraggableItem : MonoBehaviour
         {
             InputManager.Instance.preGeneratedItem = gameObject;
             InputManager.Instance.isDragging = true;
+            InputManager.Instance.originPositon = null;
             UpdateConnections();
         }
 
@@ -109,10 +110,21 @@ public class DraggableItem : MonoBehaviour
             }
             if (other.gameObject.tag.Equals("wallmount") && !isCollidingWithOtherCabinets)
             {
-                Debug.Log("wallmount position detect");
                 if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter)
                 {
+                    currentSelectedPart = other.gameObject;
                     other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
+                    InputManager.Instance.originPositon = other.transform;
+                    GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
+                }
+            }
+            if(other.gameObject.tag.Equals("overheads") && !isCollidingWithOtherCabinets)
+            {
+                if(InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter)
+                {
+                    currentSelectedPart = other.gameObject;
+                    other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
+                    InputManager.Instance.originPositon = other.transform;
                     GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
                 }
             }
@@ -130,8 +142,6 @@ public class DraggableItem : MonoBehaviour
         {
             if (InputManager.Instance.preGeneratedItem = gameObject)
             {
-                InputManager.Instance.originPositon = null;
-
                 other.gameObject.GetComponent<Renderer>().material = YellowHighlightPart;
                 GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
             }
@@ -145,6 +155,7 @@ public class DraggableItem : MonoBehaviour
 
     public void UpdateConnections()
     {
+        UpdateAllWallMountHighlights();
         var uniqueItems = ConnectedParts.Except(NonConnectedParts).ToList();
         NonConnectedParts.AddRange(uniqueItems);
         ConnectedParts.Clear();
@@ -168,9 +179,25 @@ public class DraggableItem : MonoBehaviour
 
             }  
         }
-
         OthersCabinetsPart.Clear();
     }
+
+    private void UpdateAllWallMountHighlights()
+    {
+        if (gameObject.name.Contains("WallMount40"))
+        {
+            EnableWallmountHighlight("_40wallmount");
+        }
+        if (gameObject.name.Contains("LeftWallMount20"))
+        {
+            EnableWallmountHighlight("_20leftwallmount");
+        }
+        if (gameObject.name.Contains("RightWallMount20"))
+        {
+            EnableWallmountHighlight("_20rightwallmount");
+        }
+    }
+
 
     public void UpdateConnectedParts()
     {
@@ -213,6 +240,84 @@ public class DraggableItem : MonoBehaviour
 
                 NonConnectedParts.RemoveAt(i);
             }
+        }
+    }
+
+    public void EnableWallmountHighlight(string type)
+    {
+        switch (type)
+        {
+            case "_40wallmount":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if(cabinet.gameObject != InputManager.Instance.preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._40inWallMountHighlight != null)
+                            {
+                                if (draggableItem._40inWallMountHighlight.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._40inWallMountHighlight)
+                                    {
+                                        item.SetActive(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case "_20leftwallmount":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != InputManager.Instance.preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._20inLeftWallMountHighlight != null)
+                            {
+                                if (draggableItem._20inLeftWallMountHighlight.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._20inLeftWallMountHighlight)
+                                    {
+                                        item.SetActive(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case "_20rightwallmount":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != InputManager.Instance.preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._20inRightWallMountHighlight != null)
+                            {
+                                if (draggableItem._20inRightWallMountHighlight.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._20inRightWallMountHighlight)
+                                    {
+                                        item.SetActive(true);
+                                    }
+                                }
+                            }
+                        }
+                    }   
+                }
+                break;
         }
     }
 }
