@@ -15,6 +15,12 @@ public class UIManager : MonoBehaviour
     public GameObject NotificationmessagePanel;
     public GameObject AreYouSureToExitDialog;
 
+    public GameObject startMenu;
+    public GameObject cabinetMenu;
+    public GameObject colorMenu;
+    public GameObject worksurfaceMenu;
+    public GameObject backsplashMenu;
+
     private string _enteredFileExtensions;
 
     public static UIManager Instance;
@@ -75,7 +81,44 @@ public class UIManager : MonoBehaviour
         urlMenu.SetActive(false);
         RoomModelManager.Instance.EnableAllWalls();
         DoubleClickDetector.Instance.isWallOpen = false;
-        Destroy(DoubleClickDetector.Instance.wallCameraObject.gameObject);
+
+        WallCamera[] wallCameras = FindObjectsOfType<WallCamera>();
+        foreach (WallCamera wallCamera in wallCameras)
+        {
+            Destroy(wallCamera.gameObject);
+        }
+    }
+
+    public void OpenCabinetMenu()
+    {
+        cabinetMenu.SetActive(true);
+        colorMenu.SetActive(false);
+        worksurfaceMenu.SetActive(false);
+        backsplashMenu.SetActive(false);
+    }
+
+    public void OpenColorMenu()
+    {
+        cabinetMenu.SetActive(false);
+        colorMenu.SetActive(true);
+        worksurfaceMenu.SetActive(false);
+        backsplashMenu.SetActive(false);
+    }
+
+    public void OpenWorksurfaceMenu()
+    {
+        cabinetMenu.SetActive(false);
+        colorMenu.SetActive(false);
+        worksurfaceMenu.SetActive(true);
+        backsplashMenu.SetActive(false);
+    }
+
+    public void OpenBacksplashMenu()
+    {
+        cabinetMenu.SetActive(false);
+        colorMenu.SetActive(false);
+        worksurfaceMenu.SetActive(false);
+        backsplashMenu.SetActive(true);
     }
 
     private void FilesWereOpenedEventHandler(File[] files)
@@ -86,7 +129,7 @@ public class UIManager : MonoBehaviour
         {
             var file = _loadedFiles[0];
             FileManager.Instance.OpenFileBrowser(file.data);
-            UIManager.Instance.loadingPanel.SetActive(true);
+            loadingPanel.SetActive(true);
         }
     }
 

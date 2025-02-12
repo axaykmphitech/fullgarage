@@ -9,6 +9,7 @@ public class DraggableItem : MonoBehaviour
     public bool isGroundCabinet;
     public bool isWallMount;
     public bool isOverHead;
+    public bool isWorksurface;
     public bool isCollidingWithOtherCabinets;
 
     public GameObject currentSelectedPart;
@@ -26,6 +27,13 @@ public class DraggableItem : MonoBehaviour
     public GameObject[] _40inOverheadHighlight;
     public GameObject[] _60inOverheadHighlight;
     public GameObject[] _80inOverheadhighlight;
+
+    [Space(15)]
+    public GameObject[] _20inWorksurfaceHighlight;
+    public GameObject[] _40inWorksurfaceHighlight;
+    public GameObject[] _60inWorksurfaceHighlight;
+    public GameObject[] _80inWorksurfaceHighlight;
+    public GameObject[] _40inSink;
 
     [Space(15)]
     public Material YellowHighlightPart;
@@ -76,7 +84,7 @@ public class DraggableItem : MonoBehaviour
                 {
                     InputManager.Instance.offsetMultiplier = Vector3.forward;
                 }
-                if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter)
+                if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter && InputManager.Instance.isCabinetOnWallTopLeft && InputManager.Instance.isCabinetOnWallTopRight && InputManager.Instance.isCabinetOnWallBottomLeft && InputManager.Instance.isCabinetOnWallBottomRight)
                 {
                     other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
                     GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
@@ -102,7 +110,7 @@ public class DraggableItem : MonoBehaviour
                 {
                     InputManager.Instance.offsetMultiplier = Vector3.back;
                 }
-                if(InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter)
+                if(InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter && InputManager.Instance.isCabinetOnWallTopLeft && InputManager.Instance.isCabinetOnWallTopRight && InputManager.Instance.isCabinetOnWallBottomLeft && InputManager.Instance.isCabinetOnWallBottomRight)
                 {
                     other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
                     GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
@@ -110,17 +118,7 @@ public class DraggableItem : MonoBehaviour
             }
             if (other.gameObject.tag.Equals("wallmount") && !isCollidingWithOtherCabinets)
             {
-                if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter)
-                {
-                    currentSelectedPart = other.gameObject;
-                    other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
-                    InputManager.Instance.originPositon = other.transform;
-                    GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
-                }
-            }
-            if(other.gameObject.tag.Equals("overheads") && !isCollidingWithOtherCabinets)
-            {
-                if(InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter)
+                if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter && InputManager.Instance.isCabinetOnWallTopLeft && InputManager.Instance.isCabinetOnWallTopRight && InputManager.Instance.isCabinetOnWallBottomLeft && InputManager.Instance.isCabinetOnWallBottomRight)
                 {
                     currentSelectedPart = other.gameObject;
                     other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
@@ -133,23 +131,32 @@ public class DraggableItem : MonoBehaviour
                 isCollidingWithOtherCabinets = true;
                 GetComponentInChildren<QuikOutline>().OutlineColor = Color.red;
             }
+            if(other.gameObject.name.ToLower().Equals("window"))
+            {
+                isCollidingWithOtherCabinets = true;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag.Equals("left") || other.gameObject.tag.Equals("right") || other.gameObject.tag.Equals("wallmount"))
+        //Debug.Log(other.name);
+
+        if(other.gameObject.tag.Equals("left") || other.gameObject.tag.Equals("right") || other.gameObject.tag.Equals("wallmount") || other.gameObject.tag.Equals("overheads"))
         {
-            if (InputManager.Instance.preGeneratedItem = gameObject)
+            if (InputManager.Instance.preGeneratedItem == gameObject)
             {
+                //Debug.Log("hrer");
                 other.gameObject.GetComponent<Renderer>().material = YellowHighlightPart;
                 GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
+                //Debug.Log("oh yellow");
             }
         }
         if(other.gameObject.GetComponent<DraggableItem>())
         {
             isCollidingWithOtherCabinets = false;
             GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
+            //Debug.Log("oh yellow");
         }
     }
 
@@ -251,7 +258,7 @@ public class DraggableItem : MonoBehaviour
                 foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
                 {
                     if(cabinet.gameObject != InputManager.Instance.preGeneratedItem)
-                    {
+                    {  
                         DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
 
                         if (draggableItem != null)

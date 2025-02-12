@@ -147,13 +147,36 @@ public class Cabinets : MonoBehaviour
                     break;
             }
 
-            InputManager.Instance.preGeneratedItem = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
+            GameObject cabinet;
+            InputManager.Instance.preGeneratedItem = cabinet = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
+
+            Transform doorDrawers = cabinet.transform.Find("Doors_Drawers");
+            Transform handleDrawers = cabinet.transform.Find("Handle");
+
+            if (doorDrawers != null)
+            {
+                if(CabinetColors.Instance != null)
+                {
+                    if (CabinetColors.Instance.currentSelectedDoorColor != null)
+                        doorDrawers.GetComponent<Renderer>().material = CabinetColors.Instance.currentSelectedDoorColor;
+                }
+            }
+            if(handleDrawers != null)
+            {
+                if(CabinetColors.Instance != null)
+                {
+                    if (CabinetColors.Instance.currentSelectedHandelColor != null)
+                        handleDrawers.GetComponent<Renderer>().material = CabinetColors.Instance.currentSelectedHandelColor;
+                }
+            }
+
             InputManager.Instance.preGeneratedItem.transform.SetParent(RoomModelManager.Instance.CabinetDesign);
             InputManager.Instance.isDragging = true;
 
 //#if UNITY_EDITOR
 //            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
 //#endif
+
         }
         else
         {

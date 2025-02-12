@@ -5,7 +5,7 @@ public class WallCamera : MonoBehaviour
 {
     public Camera camera;
     private float zoomSpeed = 5f;
-    private float minZoom = 2f;
+    private float minZoom = 0.5f;
     private float maxZoom = 10f;
     private float panSpeed = 15f;
 
@@ -44,7 +44,7 @@ public class WallCamera : MonoBehaviour
                 float deltaY = Input.GetAxis("Mouse Y");
 
                 Vector3 panDirection = new Vector3(-deltaX, -deltaY, 0f) * panSpeed * Time.deltaTime;
-                camera.transform.Translate(panDirection, Space.Self);
+                camera.transform.Translate(panDirection, Space.Self);//45-32 13
             }
         }
     }
