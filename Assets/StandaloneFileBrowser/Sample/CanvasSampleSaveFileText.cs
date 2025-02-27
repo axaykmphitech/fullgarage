@@ -8,13 +8,14 @@ using SFB;
 
 [RequireComponent(typeof(Button))]
 public class CanvasSampleSaveFileText : MonoBehaviour, IPointerDownHandler {
+
     public Text output;
 
     // Sample text data
     private string _data = "Example text created by StandaloneFileBrowser";
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-    //
+    
     // WebGL
     //
     [DllImport("__Internal")]

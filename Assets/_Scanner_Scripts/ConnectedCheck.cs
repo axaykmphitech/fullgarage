@@ -4,14 +4,17 @@ public class ConnectedCheck : MonoBehaviour
 {
     public bool isConnected;
 
-    Vector3 centerOrigin = Vector3.zero;
-    Vector3 leftOrigin = Vector3.zero;
-    Vector3 rightOrigin = Vector3.zero;
-    Vector3 topLeftOrigin = Vector3.zero;
-    Vector3 topRightOrigin = Vector3.zero;
+    Vector3 centerOrigin =    Vector3.zero;
+    Vector3 leftOrigin =      Vector3.zero;
+    Vector3 rightOrigin =     Vector3.zero;
+    Vector3 topLeftOrigin =   Vector3.zero;
+    Vector3 topRightOrigin =  Vector3.zero;
 
-    bool isWsRightTouch;
-    bool isWsLeftTouch;
+    bool isWsRightTouchWs;
+    bool isWsLeftTouchWs;
+
+    bool isBsLeftTouchBs;
+    bool isBsRightTouchBs;
 
     private void OnEnable()
     {
@@ -32,89 +35,244 @@ public class ConnectedCheck : MonoBehaviour
 
             if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
             {
-                leftOrigin = centerOrigin - new Vector3(0, 0, bounds.extents.z - 0.01f);
+                leftOrigin =  centerOrigin - new Vector3(0, 0, bounds.extents.z - 0.01f);
                 rightOrigin = centerOrigin + new Vector3(0, 0, bounds.extents.z - 0.01f);
 
-                topLeftOrigin = leftOrigin + new Vector3(0, bounds.extents.y - 0.01f, 0);
-                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y - 0.01f, 0);
+                topLeftOrigin =  leftOrigin + new Vector3(0, bounds.extents.y + 0.05f, 0);
+                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y + 0.05f, 0);
             }
 
             if (Mathf.Abs(dotForward - 1f) < 0.01f || Mathf.Abs(dotBack - 1f) < 0.01f)
             {
-                leftOrigin = centerOrigin - new Vector3(bounds.extents.x - 0.01f, 0, 0);
+                leftOrigin =  centerOrigin - new Vector3(bounds.extents.x - 0.01f, 0, 0);
                 rightOrigin = centerOrigin + new Vector3(bounds.extents.x - 0.01f, 0, 0);
 
-                topLeftOrigin = leftOrigin + new Vector3(0, bounds.extents.y - 0.01f, 0);
-                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y - 0.01f, 0);
+                topLeftOrigin =  leftOrigin +  new Vector3(0, bounds.extents.y + 0.05f, 0);
+                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y + 0.05f, 0);
             }
 
-            Ray rayTopLeft = new Ray(topLeftOrigin, direction);
-            Debug.DrawRay(rayTopLeft.origin, direction * 100, Color.green);
+            Ray rayTopLeftWs = new Ray(topLeftOrigin, direction);
+            Debug.DrawRay(rayTopLeftWs.origin, direction * 100, Color.green);
 
-            Ray rayTopRight = new Ray(topRightOrigin, direction);
-            Debug.DrawRay(rayTopRight.origin, direction * 100, Color.green);
+            Ray rayTopRightWs = new Ray(topRightOrigin, direction);
+            Debug.DrawRay(rayTopRightWs.origin, direction * 100, Color.green);
 
-            isWsLeftTouch = false;
-            isWsRightTouch = false;
+            isWsLeftTouchWs = false;
+            isWsRightTouchWs = false;
 
-            if (Physics.Raycast(rayTopLeft, out RaycastHit hitInfoTopLeft))
+            if (Physics.Raycast(rayTopLeftWs, out RaycastHit hitInfoTopLeftWs))
             {
-                if(gameObject.name.ToLower().Contains("worksurface"))
+                if (gameObject.name.ToLower().Contains("worksurface"))
                 {
                     bool isCurrentObject = false;
-                    if (hitInfoTopLeft.collider.gameObject.name.ToLower().Contains("ws"))
+                    if (hitInfoTopLeftWs.collider.gameObject.name.ToLower().Contains("ws"))
                     {
-                        if (hitInfoTopLeft.collider.gameObject == InputManager.Instance.preGeneratedItem)
+                        if (hitInfoTopLeftWs.collider.gameObject == InputManager.Instance.preGeneratedItem)
+                        {
+                            isCurrentObject = true;
+                        }
+                    }
+                    if (hitInfoTopLeftWs.collider.GetComponent<DraggableItem>() && (!hitInfoTopLeftWs.collider.gameObject.name.ToLower().Contains("ws") && !hitInfoTopLeftWs.collider.gameObject.name.ToLower().Contains("sink")) || isCurrentObject)
+                    {
+                        isWsLeftTouchWs = true;
+                    }
+                }
+                else
+                {
+                    if (hitInfoTopLeftWs.collider.GetComponent<DraggableItem>() && !hitInfoTopLeftWs.collider.gameObject.name.ToLower().Contains("ws"))
+                    {
+                        isWsLeftTouchWs = true;
+                    }
+                }
+            }
+
+            if (Physics.Raycast(rayTopRightWs, out RaycastHit hitInfoTopRightWs))
+            {
+                if (gameObject.name.ToLower().Contains("worksurface"))
+                {
+                    bool isCurrentObjectws = false;
+                    if (hitInfoTopRightWs.collider.gameObject.name.ToLower().Contains("ws"))
+                    {
+                        if (hitInfoTopRightWs.collider.gameObject == InputManager.Instance.preGeneratedItem)
+                        {
+                            isCurrentObjectws = true;
+                        }
+                    }
+                    if (hitInfoTopRightWs.collider.GetComponent<DraggableItem>() && (!hitInfoTopRightWs.collider.gameObject.name.ToLower().Contains("ws") && !hitInfoTopRightWs.collider.gameObject.name.ToLower().Contains("sink")) || isCurrentObjectws)
+                    {
+                        isWsRightTouchWs = true;
+                    }
+                }
+                else
+                {
+                    if (hitInfoTopRightWs.collider.GetComponent<DraggableItem>() && !hitInfoTopRightWs.collider.gameObject.name.ToLower().Contains("ws"))
+                    {
+                        isWsRightTouchWs = true;
+                    }
+                }
+            }
+            gameObject.SetActive(isWsRightTouchWs && isWsLeftTouchWs);
+        }
+
+        if (gameObject.tag.Equals("backsplash") && DoubleClickDetector.Instance.isWallOpen)
+        {
+            Bounds bounds = GetComponent<MeshRenderer>().bounds;
+
+            Vector3 direction = Vector3.down;
+            centerOrigin = bounds.center;
+
+            topLeftOrigin = centerOrigin + new Vector3(-bounds.extents.x, bounds.extents.y, -bounds.extents.z);
+            topRightOrigin = centerOrigin + new Vector3(bounds.extents.x, bounds.extents.y, -bounds.extents.z);
+
+            float dotRight = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.right);
+            float dotLeft = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
+            float dotForward = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.forward);
+            float dotBack = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.back);
+
+            float offset = 0;
+            if(InputManager.Instance.wallNormal == Vector3.back || InputManager.Instance.wallNormal == Vector3.left)
+            {
+                offset = -0.03f;
+            }
+            if(InputManager.Instance.wallNormal == Vector3.forward || InputManager.Instance.wallNormal == Vector3.right)
+            {
+                offset = 0.03f;
+            }
+
+            if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
+            {
+                leftOrigin = centerOrigin - new Vector3(offset, 0, bounds.extents.z - 0.03f);
+                rightOrigin = centerOrigin + new Vector3(-offset, 0, bounds.extents.z - 0.03f);
+
+                topLeftOrigin = leftOrigin +   new Vector3(0, bounds.extents.y - 0.05f, 0);
+                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y - 0.05f, 0);
+            }
+
+            if (Mathf.Abs(dotForward - 1f) < 0.01f || Mathf.Abs(dotBack - 1f) < 0.01f)
+            {
+                leftOrigin =  centerOrigin - new Vector3(bounds.extents.x - 0.03f, 0, offset);
+                rightOrigin = centerOrigin + new Vector3(bounds.extents.x - 0.03f, 0, -offset);
+
+                topLeftOrigin =   leftOrigin + new Vector3(0, bounds.extents.y - 0.05f, 0);
+                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y - 0.05f, 0);
+            }
+
+            Ray rayTopLeftBs = new Ray(topLeftOrigin, direction);
+            Debug.DrawRay(rayTopLeftBs.origin, direction * 100, Color.green);
+
+            Ray rayTopRightBs = new Ray(topRightOrigin, direction);
+            Debug.DrawRay(rayTopRightBs.origin, direction * 100, Color.green);
+
+            isBsLeftTouchBs = false;
+            isBsRightTouchBs = false;
+
+            if (Physics.Raycast(rayTopLeftBs, out RaycastHit hitInfoTopLeftBs))
+            {
+                if (gameObject.name.ToLower().Contains("backsplash"))
+                {
+                    bool isCurrentObject = false;
+                    if (hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoTopLeftBs.collider.gameObject == InputManager.Instance.preGeneratedItem)
                         {
                             isCurrentObject = true;
                         }
                     }
 
-                    if (hitInfoTopLeft.collider.GetComponent<DraggableItem>() && (!hitInfoTopLeft.collider.gameObject.name.ToLower().Contains("ws") && !hitInfoTopLeft.collider.gameObject.name.ToLower().Contains("sink")) || isCurrentObject)// || hitInfoTopLeft.collider.GetComponent<QuikOutline>().OutlineColor == Color.green
-                        isWsLeftTouch = true;
+                    //Debug.Log(gameObject.name, gameObject);
+                    //Debug.Log(hitInfoTopLeftBs.collider.gameObject, hitInfoTopLeftBs.collider.gameObject);
+                    //Debug.Log(hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs") + " " + isCurrentObject);
+                    if (hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() && !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs") || isCurrentObject)
+                    {
+                        isBsLeftTouchBs = true;
+                    }
                 }
                 else
                 {
-                    if (hitInfoTopLeft.collider.GetComponent<DraggableItem>() && !hitInfoTopLeft.collider.gameObject.name.ToLower().Contains("ws"))
-                        isWsLeftTouch = true;
+                    //Debug.Log(gameObject.name, gameObject);
+                    //Debug.Log(hitInfoTopLeftBs.collider.gameObject, hitInfoTopLeftBs.collider.gameObject);
+                    //Debug.Log(hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs"));
+                    if (hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() && !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs"))
+                    {
+                        isBsLeftTouchBs = true;
+                    }
                 }
             }
 
-            if (Physics.Raycast(rayTopRight, out RaycastHit hitInfoTopRight))
+            if (Physics.Raycast(rayTopRightBs, out RaycastHit hitInfoTopRightBs))
             {
-                if(gameObject.name.ToLower().Contains("worksurface"))
+                if (gameObject.name.ToLower().Contains("backsplash"))
                 {
                     bool isCurrentObject = false;
-                    if (hitInfoTopRight.collider.gameObject.name.ToLower().Contains("ws"))
+                    if (hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs"))
                     {
-                        if (hitInfoTopRight.collider.gameObject == InputManager.Instance.preGeneratedItem)
+                        if (hitInfoTopRightBs.collider.gameObject == InputManager.Instance.preGeneratedItem)
                         {
                             isCurrentObject = true;
                         }
                     }
-                    if (hitInfoTopRight.collider.GetComponent<DraggableItem>() && (!hitInfoTopRight.collider.gameObject.name.ToLower().Contains("ws") && !hitInfoTopRight.collider.gameObject.name.ToLower().Contains("sink")) || isCurrentObject)// || hitInfoTopRight.collider.GetComponent<QuikOutline>().OutlineColor == Color.green
-                        isWsRightTouch = true;
+                    //Debug.Log(gameObject.name, gameObject);
+                    //Debug.Log(hitInfoTopRightBs.collider.gameObject, hitInfoTopRightBs.collider.gameObject);
+                    //Debug.Log(hitInfoTopRightBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs") + " " + isCurrentObject);
+                    if (hitInfoTopRightBs.collider.GetComponent<DraggableItem>() && !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs") || isCurrentObject)
+                    {
+                        isBsRightTouchBs = true;
+                    }
                 }
                 else
                 {
-                    if (hitInfoTopRight.collider.GetComponent<DraggableItem>() && !hitInfoTopRight.collider.gameObject.name.ToLower().Contains("ws"))
-                        isWsRightTouch = true;
+                    //Debug.Log(gameObject.name, gameObject);
+                    //Debug.Log(hitInfoTopRightBs.collider.gameObject, hitInfoTopRightBs.collider.gameObject);
+                    //Debug.Log(hitInfoTopRightBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs"));
+                    if (hitInfoTopRightBs.collider.GetComponent<DraggableItem>() && !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs"))
+                    {
+                        isBsRightTouchBs = true;
+                    }
                 }
             }
-            gameObject.SetActive(isWsRightTouch && isWsLeftTouch);
+            //Debug.Log("right " + isBsLeftTouchBs + " left " + isBsRightTouchBs, gameObject);
+            //gameObject.SetActive(isBsLeftTouchBs && isBsRightTouchBs);
         }
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(gameObject.tag);
-        if((gameObject.tag.Equals("overheads") || gameObject.tag.Equals("wallmount") || gameObject.tag.Equals("worksurface")) && InputManager.Instance.preGeneratedItem != other.gameObject)
+        if (other.GetComponent<DraggableItem>() && InputManager.Instance.preGeneratedItem != other.gameObject)
+            gameObject.SetActive(false);
+
+        if (gameObject.tag.Equals("overheads") && InputManager.Instance.preGeneratedItem != other.gameObject)
         {
-            if (other.GetComponent<DraggableItem>())
+            if(other.GetComponent<DraggableItem>() && other.gameObject.name.ToLower().Contains("overheads"))
             {
                 gameObject.SetActive(false);
             }
+        }
+
+        if (gameObject.tag.Equals("wallmount") && InputManager.Instance.preGeneratedItem != other.gameObject)
+        {
+            if (other.GetComponent<DraggableItem>() && other.gameObject.name.ToLower().Contains("wallmount"))
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
+        //if (gameObject.tag.Equals("worksurface") && InputManager.Instance.preGeneratedItem != other.gameObject)
+        //{
+        //    if (other.GetComponent<DraggableItem>() && other.gameObject.name.ToLower().Contains("ws"))
+        //    {
+        //        gameObject.SetActive(false);
+        //    }
+        //}
+
+        if (gameObject.tag.Equals("backsplash"))
+        {
+            //Debug.Log(other.gameObject.name.ToLower(), other.gameObject);
+            //if (other.GetComponent<DraggableItem>() && (other.gameObject.name.ToLower().Contains("bs") || other.gameObject.tag.Equals("backsplash")))
+            //{
+                Debug.Log("make false", other.gameObject);
+                gameObject.SetActive(false);
+            //}
         }
     }
 
@@ -129,6 +287,7 @@ public class ConnectedCheck : MonoBehaviour
             isConnected = false;
         }
     }
+
     public void OnTriggerExit(Collider other)
     {
         isConnected = false;

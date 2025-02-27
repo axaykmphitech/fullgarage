@@ -6,7 +6,7 @@ public class WallCamera : MonoBehaviour
     public Camera camera;
     private float zoomSpeed = 5f;
     private float minZoom = 0.5f;
-    private float maxZoom = 10f;
+    private float maxZoom =  10f;
     private float panSpeed = 15f;
 
     private void Start()
@@ -27,7 +27,7 @@ public class WallCamera : MonoBehaviour
             float scroll = Input.GetAxis("Mouse ScrollWheel");
 
             camera.orthographicSize -= scroll * zoomSpeed;
-            camera.orthographicSize = Mathf.Clamp(camera.orthographicSize, minZoom, maxZoom);
+            camera.orthographicSize =  Mathf.Clamp(camera.orthographicSize, minZoom, maxZoom);
         }
     }
 
@@ -44,7 +44,7 @@ public class WallCamera : MonoBehaviour
                 float deltaY = Input.GetAxis("Mouse Y");
 
                 Vector3 panDirection = new Vector3(-deltaX, -deltaY, 0f) * panSpeed * Time.deltaTime;
-                camera.transform.Translate(panDirection, Space.Self);//45-32 13
+                camera.transform.Translate(panDirection, Space.Self);
             }
         }
     }

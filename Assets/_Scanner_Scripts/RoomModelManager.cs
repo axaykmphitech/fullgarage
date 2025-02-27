@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class RoomModelManager : MonoBehaviour
 {
-    private List<Transform> allWalls;
-    public List<Transform> walls;
+    private List<Transform>  allWalls;
+    public List<Transform>      walls;
     public List<Transform> allWindows;
-    public Transform floor;
-    public Transform RoomModelParent;
+    public Transform            floor;
+    public Transform  RoomModelParent;
     [HideInInspector]
-    public GltfAsset gltfAsset;
-    public Transform CabinetDesign;
+    public GltfAsset        gltfAsset;
+    public Transform    CabinetDesign;
 
-    public float floorPositionY;
-    public float wallmountYPosition;
-    public float overheadYPosition;
-    public float worksurfacePosition;
+    public float       floorPositionY;
+    public float   wallmountYPosition;
+    public float    overheadYPosition;
+    public float worksurfaceYPosition;
+    public float  backsplashYPosition;
 
     public static RoomModelManager Instance;
 
@@ -72,16 +73,17 @@ public class RoomModelManager : MonoBehaviour
         }
         foreach(Transform item in allWindows)
         {
-            //item.gameObject.AddComponent<BoxCollider>();
+            item.gameObject.AddComponent<BoxCollider>();
         }
 
         floorPositionY = allFloor[0].gameObject.AddComponent<BoxCollider>().bounds.center.y;
-        wallmountYPosition = floorPositionY +  1.497300f;
-        overheadYPosition  = floorPositionY +  2.080293f;
-        worksurfacePosition = floorPositionY + 0.94f;
-        UIManager.Instance.loadingPanel.SetActive(false);
-        UIManager.Instance.startMenu.SetActive(false);
-        UIManager.Instance.cabinetMenu.SetActive(true);
+        wallmountYPosition = floorPositionY +  1.497300f ;
+        overheadYPosition  = floorPositionY +  2.080293f ;
+        worksurfaceYPosition = floorPositionY +    0.94f ;
+        backsplashYPosition =  floorPositionY +   1.218f ;
+        UIManager.Instance.loadingPanel. SetActive(false);
+        UIManager.Instance.startMenu.    SetActive(false);
+        UIManager.Instance.cabinetMenu.   SetActive(true);
     }
 
     public void SetupWalls()

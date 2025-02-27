@@ -4,38 +4,41 @@ using System;
 using UnityEngine.UI;
 using FrostweepGames.Plugins.WebGLFileBrowser;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
-    public Button openFileDialogButton;
-    public GameObject urlMenu;
-    public GameObject _3DRoomMenu;
-    public GameObject singleWallMenu;
-    public GameObject loadingPanel;
+    public Button         openFileDialogButton;
+    public GameObject                  urlMenu;
+    public GameObject              _3DRoomMenu;
+    public GameObject           singleWallMenu;
+    public GameObject             loadingPanel;
     public GameObject NotificationmessagePanel;
-    public GameObject AreYouSureToExitDialog;
+    public GameObject   AreYouSureToExitDialog;
 
-    public GameObject startMenu;
-    public GameObject cabinetMenu;
-    public GameObject colorMenu;
+    public GameObject       startMenu;
+    public GameObject     cabinetMenu;
+    public GameObject       colorMenu;
     public GameObject worksurfaceMenu;
-    public GameObject backsplashMenu;
+    public GameObject  backsplashMenu;
 
     private string _enteredFileExtensions;
+    public static      UIManager Instance;
+    private File[]           _loadedFiles;
 
-    public static UIManager Instance;
-
-    private File[] _loadedFiles;
+    public List<Toggle> showDimentsionsToggle;
+    public bool isDimensionsShow = true;
 
     private void Awake()
     {
         Instance = this;
+        isDimensionsShow = true;
     }
 
     private void Start()
     {
         WebGLFileBrowser.FilesWereOpenedEvent += FilesWereOpenedEventHandler;
-        WebGLFileBrowser.FileOpenFailedEvent +=  FileOpenFailedEventHandler ;
+        WebGLFileBrowser.FileOpenFailedEvent  +=  FileOpenFailedEventHandler;
 
 #if !UNITY_EDITOR
         openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
@@ -48,14 +51,14 @@ public class UIManager : MonoBehaviour
     private void OnDestroy()
     {
         WebGLFileBrowser.FilesWereOpenedEvent -= FilesWereOpenedEventHandler;
-        WebGLFileBrowser.FileOpenFailedEvent -= FileOpenFailedEventHandler;
+        WebGLFileBrowser.FileOpenFailedEvent  -=  FileOpenFailedEventHandler;
     }
 
     public void OpenWallUi()
     {
         singleWallMenu.SetActive(true);
-        _3DRoomMenu.SetActive(false);
-        urlMenu.SetActive(false);
+        _3DRoomMenu.   SetActive(false);
+        urlMenu.       SetActive(false);
     }
 
     public void BackToURL()
@@ -65,9 +68,9 @@ public class UIManager : MonoBehaviour
 
     public void YesSureToExit()
     {
-        _3DRoomMenu.SetActive(false);
+        _3DRoomMenu.   SetActive(false);
         singleWallMenu.SetActive(false);
-        urlMenu.SetActive(true);
+        urlMenu.        SetActive(true);
         Destroy(RoomModelManager.Instance.RoomModelParent.GetChild(0).gameObject);
         Destroy(DoubleClickDetector.Instance.wallCameraObject.gameObject);
         RoomModelManager.Instance.DestroyAllCabinets();
@@ -80,12 +83,27 @@ public class UIManager : MonoBehaviour
         singleWallMenu.SetActive(false);
         urlMenu.SetActive(false);
         RoomModelManager.Instance.EnableAllWalls();
-        DoubleClickDetector.Instance.isWallOpen = false;
-
+        DoubleClickDetector.Instance.isWallOpen =  false;
+        DoubleClickDetector.Instance.selectedWall = null;
         WallCamera[] wallCameras = FindObjectsOfType<WallCamera>();
         foreach (WallCamera wallCamera in wallCameras)
         {
             Destroy(wallCamera.gameObject);
+        }
+        DestroyAllMeasurementLines();
+    }
+        
+    void DestroyAllMeasurementLines()
+    {
+        GameObject[] objects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in objects)
+        {
+            if (obj.name == "MeasurementLine" || obj.name == "DimensionText" || obj.name == "CabinetMesurement" || obj.name == "CabinetDimensionText")
+            {
+                DoubleClickDetector.Instance.AllDimensions.Remove(obj);
+                Destroy(obj);
+            }
         }
     }
 
@@ -142,6 +160,20 @@ public class UIManager : MonoBehaviour
     {
         WebGLFileBrowser.SetLocalization(LocalizationKey.DESCRIPTION_TEXT, "Select file to load or use drag & drop");
         WebGLFileBrowser.OpenFilePanelWithFilters(WebGLFileBrowser.GetFilteredFileExtensions(_enteredFileExtensions), false);
+    }
+
+    public void ShowHideDimensions(Toggle toggle)
+    {
+        foreach (var item in showDimentsionsToggle)
+        {
+            if(item != toggle)
+            {
+                item.isOn = toggle.isOn;
+            }
+        }
+
+        isDimensionsShow = toggle.isOn;
+        DoubleClickDetector.Instance.ShowHideMeasurement(toggle.isOn);
     }
 }
 

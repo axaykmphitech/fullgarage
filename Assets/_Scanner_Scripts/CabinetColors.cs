@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CabinetColors : MonoBehaviour
 {
@@ -9,33 +10,33 @@ public class CabinetColors : MonoBehaviour
         Instance = this;
     }
 
-    public Material currentSelectedDoorColor;
+    public Material   currentSelectedDoorColor;
     public Material currentSelectedHandelColor;
 
     [Header("Door Color Materials")]
-    public Material BlackMaterial;
-    public Material TrafficRedMaterial;
-    public Material TrafficGreyMaterial;
-    public Material PureWhiteMaterial;
-    public Material WindowGreyMaterial;
-    public Material ZincYellowMaterial;
-    public Material SignalBlueMaterial;
+    public Material           BlackMaterial;
+    public Material      TrafficRedMaterial;
+    public Material     TrafficGreyMaterial;
+    public Material       PureWhiteMaterial;
+    public Material      WindowGreyMaterial;
+    public Material      ZincYellowMaterial;
+    public Material      SignalBlueMaterial;
     public Material BrightRedOrangeMaterial;
-    public Material SkyBlueMaterial;
-    public Material GreenMaterial;
+    public Material         SkyBlueMaterial;
+    public Material           GreenMaterial;
 
     [Header("Handle Color Material")]
-    public Material BlackHandleMat;
-    public Material SilverHandleMat;
-    public Material WindowGreyHandleMat;
-    public Material PureWhiteHandleMat;
-    public Material ZincYellowHandleMat;
-    public Material SignalBlueHandleMat;
+    public Material           BlackHandleMat;
+    public Material          SilverHandleMat;
+    public Material      WindowGreyHandleMat;
+    public Material       PureWhiteHandleMat;
+    public Material      ZincYellowHandleMat;
+    public Material      SignalBlueHandleMat;
     public Material BrightRedOrangeHandleMat;
-    public Material SkyBlueHandleMat;
-    public Material GreenHandleMat;
-    public Material RedHandleMat;
-    public Material TrafficGreyHandleMat;
+    public Material         SkyBlueHandleMat;
+    public Material           GreenHandleMat;
+    public Material             RedHandleMat;
+    public Material     TrafficGreyHandleMat;
 
     //Door and Drawers
     public void DoorBlackColor()
@@ -90,14 +91,50 @@ public class CabinetColors : MonoBehaviour
 
     private void FindDoorDrawersChangeColor(Material color)
     {
-        currentSelectedDoorColor = color;
-        foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
+        if(DoubleClickDetector.Instance.isWallOpen)
         {
-            Transform doorsDrawers = item.Find("Doors_Drawers");
-            if (doorsDrawers != null)
+            currentSelectedDoorColor = color;
+            bool onlySelected        = false;
+
+            foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
             {
-                doorsDrawers.GetComponent<Renderer>().material = color;
+                if (item.GetComponentInChildren<QuikOutline>().enabled)
+                {
+                    onlySelected = true;
+                    break;
+                }
             }
+            if(onlySelected)
+            {
+                foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
+                {
+                    if (item.GetComponentInChildren<QuikOutline>().enabled)
+                    {
+                        Transform doorsDrawers = item.Find("Doors_Drawers");
+                        if (doorsDrawers != null)
+                        {
+                            doorsDrawers.GetComponent<Renderer>().material = color;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
+                {
+                    Transform doorsDrawers = item.Find("Doors_Drawers");
+                    if (doorsDrawers != null)
+                    {
+                        doorsDrawers.GetComponent<Renderer>().material = color;
+                    }
+                }
+            }
+        }
+        else
+        {
+            UIManager.Instance.NotificationmessagePanel.SetActive(true);
+            UIManager.Instance.NotificationmessagePanel.GetComponentInChildren<Text>().text = "Please select a wall first.";
+            UIManager.Instance.NotificationmessagePanel.GetComponent<Animator>().Play("NotificationPopINout", -1, 0);
         }
     }
 
@@ -105,7 +142,6 @@ public class CabinetColors : MonoBehaviour
     public void HandleBlackColor()
     {
         FindHandleChangeColor(BlackHandleMat);
-
     }
 
     public void HandleSilverColor()
@@ -160,14 +196,51 @@ public class CabinetColors : MonoBehaviour
 
     private void FindHandleChangeColor(Material color)
     {
-        currentSelectedHandelColor = color;
-        foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
+        if(DoubleClickDetector.Instance.isWallOpen)
         {
-            Transform doorsDrawers = item.Find("Handles");
-            if (doorsDrawers != null)
+            currentSelectedHandelColor = color;
+            bool onlySelected = false;
+
+            foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
             {
-                doorsDrawers.GetComponent<Renderer>().material = color;
+                if (item.GetComponentInChildren<QuikOutline>().enabled)
+                {
+                    onlySelected = true;
+                    break;
+                }
             }
+
+            if(onlySelected)
+            {
+                foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
+                {
+                    if (item.GetComponentInChildren<QuikOutline>().enabled)
+                    {
+                        Transform doorsDrawers = item.Find("Handles");
+                        if (doorsDrawers != null)
+                        {
+                            doorsDrawers.GetComponent<Renderer>().material = color;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
+                {
+                    Transform doorsDrawers = item.Find("Handles");
+                    if (doorsDrawers != null)
+                    {
+                        doorsDrawers.GetComponent<Renderer>().material = color;
+                    }
+                }
+            }
+        }
+        else
+        {
+            UIManager.Instance.NotificationmessagePanel.SetActive(true);
+            UIManager.Instance.NotificationmessagePanel.GetComponentInChildren<Text>().text = "Please select a wall first.";
+            UIManager.Instance.NotificationmessagePanel.GetComponent<Animator>().Play("NotificationPopINout", -1, 0);
         }
     }
 }

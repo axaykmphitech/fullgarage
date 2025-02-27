@@ -12,6 +12,7 @@ TagManager:
   - wallmount
   - overheads
   - worksurface
+  - backsplash
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - 
   - FullColl
-  - 
+  - BacksplashHighlight
   - 
   - 
   - 

@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 public class CameraZoomAndPan : MonoBehaviour
 {
-    public Camera camera; 
-    public float zoomSpeed = 2f;
-    public float minZoom = 2f;
-    public float maxZoom = 10f;
+    public Camera              camera; 
+    public float       zoomSpeed = 2f;
+    public float         minZoom = 2f;
+    public float        maxZoom = 10f;
     private Vector3 lastMousePosition;
     public float rotationSpeed = 100f;
-    public float panSpeed = 5f;
+    public float        panSpeed = 5f;
 
     void Update()
     {
@@ -45,7 +45,6 @@ public class CameraZoomAndPan : MonoBehaviour
 
             transform.parent.transform.Rotate(0, rotationY, 0, Space.World);
         }
-
         lastMousePosition = Input.mousePosition;
     }
 
@@ -57,7 +56,7 @@ public class CameraZoomAndPan : MonoBehaviour
             {
                 if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                     return;
-
+                
                 float deltaX = Input.GetAxis("Mouse X");
                 float deltaY = Input.GetAxis("Mouse Y");
 

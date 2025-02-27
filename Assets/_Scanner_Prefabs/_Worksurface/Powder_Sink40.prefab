@@ -766,6 +766,7 @@ MonoBehaviour:
   isWallMount: 0
   isOverHead: 0
   isWorksurface: 1
+  isBacksplash: 0
   isCollidingWithOtherCabinets: 0
   currentSelectedPart: {fileID: 0}
   OthersCabinetsPart: []
@@ -782,6 +783,9 @@ MonoBehaviour:
   _60inWorksurfaceHighlight: []
   _80inWorksurfaceHighlight: []
   _40inSink: []
+  _40inBacksplash: []
+  _60inBacksplash: []
+  _80inBacksplash: []
   YellowHighlightPart: {fileID: 2100000, guid: 6e88b2490b7b148e8b00f002e940ead2, type: 2}
   GreenHighlightPart: {fileID: 2100000, guid: 68f448d8b89094ba0a723ce81b6412ed, type: 2}
 --- !u!65 &4254338956169974093
@@ -803,5 +807,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.016, y: 0.018435165, z: 0.5588}
-  m_Center: {x: 0, y: 0.011243723, z: 0.0010491014}
+  m_Size: {x: 1.0109358, y: 0.1, z: 0.55777633}
+  m_Center: {x: -0.00020933151, y: 0.05, z: 0.00050109625}

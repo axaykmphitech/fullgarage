@@ -4,48 +4,46 @@ using UnityEngine.UI;
 public class Worksurface : MonoBehaviour
 {
     public GameObject stainlessSteelWorksurface;
-    public GameObject powderCoatedWorksurface;
-    public GameObject maplewoodWorksurface;
+    public GameObject   powderCoatedWorksurface;
+    public GameObject      maplewoodWorksurface;
 
     public Toggle stainlessSteelToggle;
-    public Toggle mapleToggle;
-    public Toggle powderToggle;
+    public Toggle          mapleToggle;
+    public Toggle         powderToggle;
 
     [Header("Stainless")]
-    public GameObject stainlessSteel20;
-    public GameObject stainlessSteel40;
-    public GameObject stainlessSteel60;
-    public GameObject stainlessSteel80;
+    public GameObject   stainlessSteel20;
+    public GameObject   stainlessSteel40;
+    public GameObject   stainlessSteel60;
+    public GameObject   stainlessSteel80;
     public GameObject stainlessSteelSink;
 
     [Header("Wood")]
-    public GameObject mapleWood20;
-    public GameObject mapleWood40;
-    public GameObject mapleWood60;
-    public GameObject mapleWood80;
+    public GameObject   mapleWood20;
+    public GameObject   mapleWood40;
+    public GameObject   mapleWood60;
+    public GameObject   mapleWood80;
     public GameObject mapleWoodSink;
 
     [Header("PowderCoated")]
-    public GameObject powderCoated20;
-    public GameObject powderCoated40;
-    public GameObject powderCoated60;
-    public GameObject powderCoated80;
+    public GameObject   powderCoated20;
+    public GameObject   powderCoated40;
+    public GameObject   powderCoated60;
+    public GameObject   powderCoated80;
     public GameObject powderCoatedSink;
-
-
 
     public void OpenStainlessSteelWS()
     {
         stainlessSteelWorksurface.SetActive(true);
-        powderCoatedWorksurface.SetActive(false);
-        maplewoodWorksurface.SetActive(false);
+        powderCoatedWorksurface. SetActive(false);
+        maplewoodWorksurface.    SetActive(false);
     }
 
     public void OpenPowderCoatedWS()
     {
         stainlessSteelWorksurface.SetActive(false);
-        powderCoatedWorksurface.SetActive(true);
-        maplewoodWorksurface.SetActive(false);
+        powderCoatedWorksurface.   SetActive(true);
+        maplewoodWorksurface.     SetActive(false);
     }
 
     public void OpenMapleWoodWS()
@@ -134,9 +132,8 @@ public class Worksurface : MonoBehaviour
     {
         if(stainlessSteelToggle.isOn)
         {
-            mapleToggle.isOn = false;
+            mapleToggle.isOn =  false;
             powderToggle.isOn = false;
-            Debug.Log("all stainlesssteel");
 
             foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
             {
@@ -177,8 +174,7 @@ public class Worksurface : MonoBehaviour
         {
             stainlessSteelToggle.isOn = false;
             powderToggle.isOn = false;
-            Debug.Log("all maple");
-
+            
             foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
             {
                 if (item.gameObject.name.ToLower().Contains("stainless") || item.gameObject.name.ToLower().Contains("powder"))
@@ -218,7 +214,6 @@ public class Worksurface : MonoBehaviour
         {
             stainlessSteelToggle.isOn = false;
             mapleToggle.isOn = false;
-            Debug.Log("all powder");
 
             foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
             {
@@ -267,7 +262,6 @@ public class Worksurface : MonoBehaviour
         GameObject afterInstance = Instantiate(afterPrefab, position, rotation);
 
         afterInstance.transform.parent = before.transform.parent;
-
         Destroy(before);
     }
 }

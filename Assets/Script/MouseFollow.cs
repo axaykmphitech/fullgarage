@@ -8,15 +8,9 @@ public class MouseFollow : MonoBehaviour
     Vector3 mousePosition, targetPosition;
     public Camera Cam;
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
 
     void Update()
     {
-        print("---ecvcdsv----");
         //To get the current mouse position
         mousePosition = Input.mousePosition;
 

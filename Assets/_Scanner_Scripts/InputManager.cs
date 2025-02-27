@@ -1,37 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager Instance;
-    public GameObject preGeneratedItem;
-    public bool isDragging = false;
+    public static InputManager      Instance;
+    public GameObject       preGeneratedItem;
+    public bool           isDragging = false;
     public bool isCenterWallDetected = false;
 
-    public Vector3 wallNormal;
-    public Vector3 rayCastOffset;
-    public Transform originPositon;
+    public Vector3       wallNormal;
+    public Vector3    rayCastOffset;
+    public Transform  originPositon;
     public Vector3 offsetMultiplier;
 
     [Space(15)]
-    public bool isCabinetOnWallCenter = false;
-    public bool isCabinetOnWallLeft = false;
-    public bool isCabietOnWallRight = false;
-    public bool isCabinetOnWallTop = false;
-    public bool isCabinetOnWallBottom = false;
-    public bool isCabinetOnWallTopLeft = false;
-    public bool isCabinetOnWallTopRight = false;
+    public bool      isCabinetOnWallCenter = false;
+    public bool        isCabinetOnWallLeft = false;
+    public bool        isCabietOnWallRight = false;
+    public bool         isCabinetOnWallTop = false;
+    public bool      isCabinetOnWallBottom = false;
+    public bool     isCabinetOnWallTopLeft = false;
+    public bool    isCabinetOnWallTopRight = false;
     public bool isCabinetOnWallBottomRight = false;
-    public bool isCabinetOnWallBottomLeft = false;
-    public bool isOutsideWall = false;
+    public bool  isCabinetOnWallBottomLeft = false;
+    public bool              isOutsideWall = false;
+    public bool       isHighLightDisplayed = false;
 
-    public bool isHighLightDisplayed = false;
-
-    private Vector3 originalSize;
-    private Vector3 shrinkSize;
+    private Vector3           originalSize;
+    private Vector3             shrinkSize;
     private BoxCollider preGenItemCollider;
-    private Renderer rendererForBound;
+    private Renderer      rendererForBound;
     [SerializeField] private float shrinkFactor = 0.9f;
 
     private void Awake()
@@ -43,6 +43,8 @@ public class InputManager : MonoBehaviour
     {
         if (DoubleClickDetector.Instance.isWallOpen)
         {
+            Wall currentSelectedWall = DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>();
+
             if (Input.GetMouseButtonDown(0))
             {
                 if (preGeneratedItem != null)
@@ -53,23 +55,23 @@ public class InputManager : MonoBehaviour
                         rendererForBound = outline.GetComponent<Renderer>();
                     }
 
-                    preGenItemCollider = preGeneratedItem.GetComponent<BoxCollider>();
-                    originalSize = preGenItemCollider.size;
-                    shrinkSize = originalSize * shrinkFactor;
+                    preGenItemCollider      = preGeneratedItem.GetComponent<BoxCollider>();
+                    originalSize            = preGenItemCollider.size;
+                    shrinkSize              = originalSize * shrinkFactor;
                     preGenItemCollider.size = shrinkSize;
                 }
             }
 
             if (Input.GetMouseButton(0) && isDragging)
             {
-                isCabinetOnWallCenter = false;
-                isCabinetOnWallTop = false;
-                isCabietOnWallRight = false;
-                isCabinetOnWallBottom = false;
-                isCabinetOnWallLeft = false;
-                isCabinetOnWallTopLeft = false;
-                isCabinetOnWallTopRight = false;
-                isCabinetOnWallBottomLeft = false;
+                isCabinetOnWallCenter      = false;
+                isCabinetOnWallTop         = false;
+                isCabietOnWallRight        = false;
+                isCabinetOnWallBottom      = false;
+                isCabinetOnWallLeft        = false;
+                isCabinetOnWallTopLeft     = false;
+                isCabinetOnWallTopRight    = false;
+                isCabinetOnWallBottomLeft  = false;
                 isCabinetOnWallBottomRight = false;
 
                 float selectedWallZPositon = 0;
@@ -99,75 +101,75 @@ public class InputManager : MonoBehaviour
 
                 Vector3 direction = orthographicCamera.transform.forward;
 
-                Vector3 centerOrigin = Vector3.zero;
-                Vector3 topOrigin = Vector3.zero;
-                Vector3 bottomOrigin = Vector3.zero;
-                Vector3 leftOrigin = Vector3.zero;
-                Vector3 rightOrigin = Vector3.zero;
-                Vector3 topLeftOrigin = Vector3.zero;
-                Vector3 topRightOrigin = Vector3.zero;
-                Vector3 bottomLeftOrigin = Vector3.zero;
+                Vector3 centerOrigin      = Vector3.zero;
+                Vector3 topOrigin         = Vector3.zero;
+                Vector3 bottomOrigin      = Vector3.zero;
+                Vector3 leftOrigin        = Vector3.zero;
+                Vector3 rightOrigin       = Vector3.zero;
+                Vector3 topLeftOrigin     = Vector3.zero;
+                Vector3 topRightOrigin    = Vector3.zero;
+                Vector3 bottomLeftOrigin  = Vector3.zero;
                 Vector3 bottomRightOrigin = Vector3.zero;
 
                 Bounds bounds = preGenItemCollider.bounds;
-                centerOrigin = bounds.center;
-                topOrigin = centerOrigin + new Vector3(0, bounds.extents.y, 0);
-                bottomOrigin = centerOrigin - new Vector3(0, bounds.extents.y, 0);
+                centerOrigin  = bounds.center;
+                topOrigin     = centerOrigin + new Vector3(0, bounds.extents.y, 0);
+                bottomOrigin  = centerOrigin - new Vector3(0, bounds.extents.y, 0);
 
-                topLeftOrigin = centerOrigin + new Vector3(-bounds.extents.x, bounds.extents.y, -bounds.extents.z);
-                topRightOrigin = centerOrigin + new Vector3(bounds.extents.x, bounds.extents.y, -bounds.extents.z);
-                bottomLeftOrigin = centerOrigin + new Vector3(-bounds.extents.x, -bounds.extents.y, -bounds.extents.z);
+                topLeftOrigin     = centerOrigin + new Vector3(-bounds.extents.x, bounds.extents.y, -bounds.extents.z);
+                topRightOrigin    = centerOrigin + new Vector3(bounds.extents.x, bounds.extents.y, -bounds.extents.z);
+                bottomLeftOrigin  = centerOrigin + new Vector3(-bounds.extents.x, -bounds.extents.y, -bounds.extents.z);
                 bottomRightOrigin = centerOrigin + new Vector3(bounds.extents.x, -bounds.extents.y, -bounds.extents.z);
 
-                float dotRight = Vector3.Dot(wallNormal.normalized, Vector3.right);
-                float dotLeft = Vector3.Dot(wallNormal.normalized, Vector3.left);
+                float dotRight   = Vector3.Dot(wallNormal.normalized, Vector3.right);
+                float dotLeft    = Vector3.Dot(wallNormal.normalized, Vector3.left);
                 float dotForward = Vector3.Dot(wallNormal.normalized, Vector3.forward);
-                float dotBack = Vector3.Dot(wallNormal.normalized, Vector3.back);
+                float dotBack    = Vector3.Dot(wallNormal.normalized, Vector3.back);
 
 
                 if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
                 {
-                    leftOrigin = centerOrigin - new Vector3(0, 0, bounds.extents.z);
+                    leftOrigin  = centerOrigin - new Vector3(0, 0, bounds.extents.z);
                     rightOrigin = centerOrigin + new Vector3(0, 0, bounds.extents.z);
 
-                    topLeftOrigin = leftOrigin + new Vector3(0, bounds.extents.y, 0);
-                    bottomLeftOrigin = leftOrigin - new Vector3(0, bounds.extents.y, 0);
-                    topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y, 0);
+                    topLeftOrigin     = leftOrigin  + new Vector3(0, bounds.extents.y, 0);
+                    bottomLeftOrigin  = leftOrigin  - new Vector3(0, bounds.extents.y, 0);
+                    topRightOrigin    = rightOrigin + new Vector3(0, bounds.extents.y, 0);
                     bottomRightOrigin = rightOrigin - new Vector3(0, bounds.extents.y, 0);
                 }
 
                 if (Mathf.Abs(dotForward - 1f) < 0.01f || Mathf.Abs(dotBack - 1f) < 0.01f)
                 {
-                    leftOrigin = centerOrigin - new Vector3(bounds.extents.x, 0, 0);
+                    leftOrigin  = centerOrigin - new Vector3(bounds.extents.x, 0, 0);
                     rightOrigin = centerOrigin + new Vector3(bounds.extents.x, 0, 0);
 
-                    topLeftOrigin = leftOrigin + new Vector3(0, bounds.extents.y, 0);
-                    bottomLeftOrigin = leftOrigin - new Vector3(0, bounds.extents.y, 0);
-                    topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y, 0);
+                    topLeftOrigin     = leftOrigin  + new Vector3(0, bounds.extents.y, 0);
+                    bottomLeftOrigin  = leftOrigin  - new Vector3(0, bounds.extents.y, 0);
+                    topRightOrigin    = rightOrigin + new Vector3(0, bounds.extents.y, 0);
                     bottomRightOrigin = rightOrigin - new Vector3(0, bounds.extents.y, 0);
                 }
 
                 //Ray to center
-                Ray rayCenter = new Ray(centerOrigin, direction);
+                Ray rayCenter   = new Ray(centerOrigin, direction);
                 //Debug.DrawRay(rayCenter.origin, direction * 100, Color.red);
 
                 //Ray to top
-                Ray rayTop = new Ray(topOrigin, direction);
+                Ray rayTop      = new Ray(topOrigin, direction);
                 //Debug.DrawRay(rayTop.origin, direction * 100, Color.blue);
 
                 //Ray to bottom
-                Ray rayBottom = new Ray(bottomOrigin, direction);
+                Ray rayBottom   = new Ray(bottomOrigin, direction);
   //                Debug.DrawRay(rayBottom.origin, direction * 100, Color.magenta);
 
                 //Ray to right
-                Ray rayRight = new Ray(rightOrigin, direction);
+                Ray rayRight    = new Ray(rightOrigin, direction);
   //              Debug.DrawRay(rayRight.origin, direction * 100, Color.cyan);
 
                 //Ray to left
-                Ray rayLeft = new Ray(leftOrigin, direction);
+                Ray rayLeft     = new Ray(leftOrigin, direction);
   //            Debug.DrawRay(rayLeft.origin, direction * 100, Color.green);
 
-                Ray rayTopLeft = new Ray(topLeftOrigin, direction);
+                Ray rayTopLeft  = new Ray(topLeftOrigin, direction);
                 //Debug.DrawRay(rayTopLeft.origin, direction * 100, Color.green);
 
                 Ray rayTopRight = new Ray(topRightOrigin, direction);
@@ -192,9 +194,16 @@ public class InputManager : MonoBehaviour
                     {
                         if (hitInfoCenter.collider.name.Contains("wall") || hitInfoCenter.collider.name.ToLower().Contains("overhead"))
                         {
-                            wallNormal = hitInfoCenter.normal;
-                            selectedWallZPositon = hitInfoCenter.collider.bounds.center.z;
-                            isCenterWallDetected = true;
+                            wallNormal            = hitInfoCenter.normal;
+                            selectedWallZPositon  = hitInfoCenter.collider.bounds.center.z;
+                            isCenterWallDetected  = true;
+                            isCabinetOnWallCenter = true;
+                        }
+                    }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoCenter.collider.name.Contains("wall") || hitInfoCenter.collider.name.ToLower().Contains("backsplash"))
+                        {
                             isCabinetOnWallCenter = true;
                         }
                     }
@@ -208,7 +217,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoTop.collider.name, hitInfoTop.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoTop.collider.name.Contains("wall") || hitInfoTop.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoTop.collider.name.Contains("wall") || hitInfoTop.collider.name.ToLower().Contains("worksurface") || hitInfoTop.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallTop = true;
                         }
@@ -220,6 +229,13 @@ public class InputManager : MonoBehaviour
                             isCabinetOnWallTop = true;
                         }
                     }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoTop.collider.name.Contains("wall") || hitInfoTop.collider.name.ToLower().Contains("backsplash"))
+                        {
+                            isCabinetOnWallTop = true;
+                        }
+                    }
                     else if(hitInfoTop.collider.name.Contains("wall"))
                     {
                         isCabinetOnWallTop = true;
@@ -227,10 +243,9 @@ public class InputManager : MonoBehaviour
                 }
                 if (Physics.Raycast(rayBottom, out RaycastHit hitInfoBottom))
                 {
-                    //Debug.Log(hitInfoBottom.collider.name, hitInfoBottom.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoBottom.collider.name.Contains("wall") || hitInfoBottom.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoBottom.collider.name.Contains("wall") || hitInfoBottom.collider.name.ToLower().Contains("worksurface") || hitInfoBottom.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallBottom = true;
                         }
@@ -238,6 +253,13 @@ public class InputManager : MonoBehaviour
                     if (preGeneratedItem.name.ToLower().Contains("overhead"))
                     {
                         if (hitInfoBottom.collider.name.Contains("wall") || hitInfoBottom.collider.name.ToLower().Contains("overhead"))
+                        {
+                            isCabinetOnWallBottom = true;
+                        }
+                    }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoBottom.collider.name.Contains("wall") || hitInfoBottom.collider.name.ToLower().Contains("backsplash"))
                         {
                             isCabinetOnWallBottom = true;
                         }
@@ -252,7 +274,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoLeft.collider.name, hitInfoLeft.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoLeft.collider.name.Contains("wall") || hitInfoLeft.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoLeft.collider.name.Contains("wall") || hitInfoLeft.collider.name.ToLower().Contains("worksurface") || hitInfoLeft.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallLeft = true;
                         }
@@ -260,6 +282,13 @@ public class InputManager : MonoBehaviour
                     if (preGeneratedItem.name.ToLower().Contains("overhead"))
                     {
                         if (hitInfoLeft.collider.name.Contains("wall") || hitInfoLeft.collider.name.ToLower().Contains("overhead"))
+                        {
+                            isCabinetOnWallLeft = true;
+                        }
+                    }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoLeft.collider.name.Contains("wall") || hitInfoLeft.collider.name.ToLower().Contains("backsplash"))
                         {
                             isCabinetOnWallLeft = true;
                         }
@@ -274,7 +303,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoRight.collider.name, hitInfoRight.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoRight.collider.name.Contains("wall") || hitInfoRight.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoRight.collider.name.Contains("wall") || hitInfoRight.collider.name.ToLower().Contains("worksurface") || hitInfoRight.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabietOnWallRight = true;
                         }
@@ -282,6 +311,13 @@ public class InputManager : MonoBehaviour
                     if (preGeneratedItem.name.ToLower().Contains("overhead"))
                     {
                         if (hitInfoRight.collider.name.Contains("wall") || hitInfoRight.collider.name.ToLower().Contains("overhead"))
+                        {
+                            isCabietOnWallRight = true;
+                        }
+                    }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoRight.collider.name.Contains("wall") || hitInfoRight.collider.name.ToLower().Contains("backsplash"))
                         {
                             isCabietOnWallRight = true;
                         }
@@ -296,7 +332,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoTopLeft.collider.name, hitInfoTopLeft.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoTopLeft.collider.name.Contains("wall") || hitInfoTopLeft.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoTopLeft.collider.name.Contains("wall") || hitInfoTopLeft.collider.name.ToLower().Contains("worksurface") || hitInfoTopLeft.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallTopLeft = true;
                         }
@@ -304,6 +340,13 @@ public class InputManager : MonoBehaviour
                     if (preGeneratedItem.name.ToLower().Contains("overhead"))
                     {
                         if (hitInfoTopLeft.collider.name.Contains("wall") || hitInfoTopLeft.collider.name.ToLower().Contains("overhead"))
+                        {
+                            isCabinetOnWallTopLeft = true;
+                        }
+                    }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoTopLeft.collider.name.Contains("wall") || hitInfoTopLeft.collider.name.ToLower().Contains("backsplash"))
                         {
                             isCabinetOnWallTopLeft = true;
                         }
@@ -318,7 +361,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoTopRight.collider.name, hitInfoTopRight.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoTopRight.collider.name.Contains("wall") || hitInfoTopRight.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoTopRight.collider.name.Contains("wall") || hitInfoTopRight.collider.name.ToLower().Contains("worksurface") || hitInfoTopRight.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallTopRight = true;
                         }
@@ -326,6 +369,13 @@ public class InputManager : MonoBehaviour
                     if (preGeneratedItem.name.ToLower().Contains("overhead"))
                     {
                         if (hitInfoTopRight.collider.name.Contains("wall") || hitInfoTopRight.collider.name.ToLower().Contains("overhead"))
+                        {
+                            isCabinetOnWallTopRight = true;
+                        }
+                    }
+                    if(preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if(hitInfoTopRight.collider.name.Contains("wall") || hitInfoTopRight.collider.name.ToLower().Contains("backsplash"))
                         {
                             isCabinetOnWallTopRight = true;
                         }
@@ -340,7 +390,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoBottomLeft.collider.name, hitInfoBottomLeft.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoBottomLeft.collider.name.Contains("wall") || hitInfoBottomLeft.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoBottomLeft.collider.name.Contains("wall") || hitInfoBottomLeft.collider.name.ToLower().Contains("worksurface") || hitInfoBottomLeft.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallBottomLeft = true;
                         }
@@ -348,6 +398,13 @@ public class InputManager : MonoBehaviour
                     if (preGeneratedItem.name.ToLower().Contains("overhead"))
                     {
                         if (hitInfoBottomLeft.collider.name.Contains("wall") || hitInfoBottomLeft.collider.name.ToLower().Contains("overhead"))
+                        {
+                            isCabinetOnWallBottomLeft = true;
+                        }
+                    }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoBottomLeft.collider.name.Contains("wall") || hitInfoBottomLeft.collider.name.ToLower().Contains("backsplash"))
                         {
                             isCabinetOnWallBottomLeft = true;
                         }
@@ -362,7 +419,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(hitInfoBottomRight.collider.name, hitInfoBottomRight.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
-                        if (hitInfoBottomRight.collider.name.Contains("wall") || hitInfoBottomRight.collider.name.ToLower().Contains("worksurface") || hitInfoCenter.collider.name.ToLower().Contains("sink40"))
+                        if (hitInfoBottomRight.collider.name.Contains("wall") || hitInfoBottomRight.collider.name.ToLower().Contains("worksurface") || hitInfoBottomRight.collider.name.ToLower().Contains("sink40"))
                         {
                             isCabinetOnWallBottomRight = true;
                         }
@@ -374,6 +431,13 @@ public class InputManager : MonoBehaviour
                             isCabinetOnWallBottomRight = true;
                         }
                     }
+                    if (preGeneratedItem.name.ToLower().Contains("bs"))
+                    {
+                        if (hitInfoBottomRight.collider.name.Contains("wall") || hitInfoBottomRight.collider.name.ToLower().Contains("backsplash"))
+                        {
+                            isCabinetOnWallBottomRight = true;
+                        }
+                    }
                     else if(hitInfoBottomRight.collider.name.Contains("wall"))
                     {
                         isCabinetOnWallBottomRight = true;
@@ -381,9 +445,14 @@ public class InputManager : MonoBehaviour
                 }
 
                 if (!isCabietOnWallRight || !isCabinetOnWallLeft || !isCabinetOnWallTop || !isCabinetOnWallBottom || !isCabinetOnWallCenter || !isCabinetOnWallTopLeft || !isCabinetOnWallTopRight || !isCabinetOnWallBottomLeft || !isCabinetOnWallBottomRight)
+                {
                     isOutsideWall = true;
+                    originPositon = null;
+                }
                 else
+                {
                     isOutsideWall = false;
+                }
 
                 float yPosition = 0;
                 if (preGeneratedItem.GetComponent<DraggableItem>().isGroundCabinet)
@@ -393,29 +462,31 @@ public class InputManager : MonoBehaviour
                 else if (preGeneratedItem.GetComponent<DraggableItem>().isOverHead)
                     yPosition = RoomModelManager.Instance.overheadYPosition;
                 else if (preGeneratedItem.GetComponent<DraggableItem>().isWorksurface)
-                    yPosition = RoomModelManager.Instance.worksurfacePosition;
+                    yPosition = RoomModelManager.Instance.worksurfaceYPosition;
+                else if (preGeneratedItem.GetComponent<DraggableItem>().isBacksplash)
+                    yPosition = RoomModelManager.Instance.backsplashYPosition;
 
                 if (wallNormal == new Vector3(1, 0, 0))
                 {
-                    preGeneratedItem.transform.forward = Vector3.right;
+                    preGeneratedItem.transform.forward  = Vector3.right;
                     preGeneratedItem.transform.position = new Vector3(cursorPositon.x - 0.35f, yPosition, cursorPositon.z);
                     //right
                 }
                 else if (wallNormal == new Vector3(-1, 0, 0))
                 {
-                    preGeneratedItem.transform.forward = Vector3.left;
+                    preGeneratedItem.transform.forward  = Vector3.left;
                     preGeneratedItem.transform.position = new Vector3(cursorPositon.x + 0.35f, yPosition, cursorPositon.z);
                     //left
                 }
                 else if (wallNormal == new Vector3(0, 0, -1))
                 {
-                    preGeneratedItem.transform.forward = Vector3.back;
+                    preGeneratedItem.transform.forward  = Vector3.back;
                     preGeneratedItem.transform.position = new Vector3(cursorPositon.x, yPosition, cursorPositon.z + 0.35f);
                     //backward
                 }
                 else if (wallNormal == new Vector3(0, 0, 1))
                 {
-                    preGeneratedItem.transform.forward = Vector3.forward;
+                    preGeneratedItem.transform.forward  = Vector3.forward;
                     preGeneratedItem.transform.position = new Vector3(cursorPositon.x, yPosition, cursorPositon.z - 0.35f);
                     //forward
                 }
@@ -485,7 +556,6 @@ public class InputManager : MonoBehaviour
                     {
                         if (hit.collider.tag.Equals("worksurface"))
                         {
-
                             if (!preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets)
                             {
                                 hit.collider.GetComponent<Renderer>().material = preGeneratedItem.GetComponent<DraggableItem>().GreenHighlightPart;
@@ -505,6 +575,37 @@ public class InputManager : MonoBehaviour
                         }
                     }
                 }
+
+                if (preGeneratedItem.name.ToLower().Contains("bs"))
+                {
+                    Ray ray = new Ray(centerOrigin, direction);
+                    RaycastHit hit;
+                    Debug.DrawRay(ray.origin, ray.direction * 1000, Color.black);
+
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                    {
+                        if (hit.collider.tag.Equals("backsplash"))
+                        {
+                            if (!preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets)
+                            {
+                                hit.collider.GetComponent<Renderer>().material = preGeneratedItem.GetComponent<DraggableItem>().GreenHighlightPart;
+                                preGeneratedItem.GetComponent<DraggableItem>().GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
+                                originPositon = hit.collider.transform;
+                                preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart = hit.collider.gameObject;
+                                UpdateHighlightBacksplashes(hit.collider.gameObject);
+                            }
+                        }
+                        else
+                        {
+                            if (!preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets)
+                            {
+                                preGeneratedItem.GetComponent<DraggableItem>().GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
+                                UpdateHighlightBacksplashes(null);
+                            }
+                        }
+                    }
+                }
+               
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -517,28 +618,41 @@ public class InputManager : MonoBehaviour
                     {
                         preGenItemCollider.size = originalSize;
                     }
-
                     if (preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets)
                     {
-                        if ((preGeneratedItem.gameObject.name.ToLower().Contains("ws") || preGeneratedItem.gameObject.name.ToLower().Contains("sink40")) && preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart != null)
+                        if ((preGeneratedItem.gameObject.name.ToLower().Contains("ws") || preGeneratedItem.gameObject.name.ToLower().Contains("sink40") || preGeneratedItem.gameObject.name.Contains("bs")) && preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart != null)
                             preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<ConnectedCheck>().isConnected = false;
                         Destroy(preGeneratedItem.gameObject);
                     }
                     if ((!isCabietOnWallRight || !isCabinetOnWallLeft || !isCabinetOnWallTop || !isCabinetOnWallBottom || !isCabinetOnWallCenter || !isCabinetOnWallTopLeft || !isCabinetOnWallTopRight || !isCabinetOnWallBottomLeft || !isCabinetOnWallBottomRight) && !preGeneratedItem.gameObject.name.ToLower().Contains("ws"))
                     {
+                        try
+                        {
+                            if (preGeneratedItem != null)
+                                preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<ConnectedCheck>().isConnected = false;
+                        }
+                        catch(Exception)
+                        {
+
+                        }
                         Destroy(preGeneratedItem.gameObject);
-                        //if ((preGeneratedItem.gameObject.name.ToLower().Contains("ws") || preGeneratedItem.gameObject.name.ToLower().Contains("sink40")) && preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart != null)
-                        //    preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<ConnectedCheck>().isConnected = false;
-                        //else
-                        //    Destroy(preGeneratedItem.gameObject);
                     }
-                    if(originPositon == null && preGeneratedItem != null && (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40")))
+                    if(originPositon == null && preGeneratedItem != null && (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40") || preGeneratedItem.name.ToLower().Contains("bs")))
                     {
+                        try
+                        {
+                            if(preGeneratedItem != null)
+                                preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<ConnectedCheck>().isConnected = false;
+                        }
+                        catch (Exception)
+                        {
+                            
+                        }
                         Destroy(preGeneratedItem.gameObject);
                     }
                     else if (originPositon != null && preGeneratedItem != null && !preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets)
                     {
-                        if (!originPositon.name.ToLower().Contains("wallmount") && !originPositon.name.ToLower().Contains("overhead") && !originPositon.name.ToLower().Contains("worksurface") && !originPositon.name.ToLower().Contains("sink40") && !isOutsideWall)
+                        if (!originPositon.name.ToLower().Contains("wallmount") && !originPositon.name.ToLower().Contains("overhead") && !originPositon.name.ToLower().Contains("worksurface") && !originPositon.name.ToLower().Contains("sink40") && !originPositon.name.ToLower().Contains("backsplash") && !isOutsideWall)
                         {
                             float halfXSizeDraggingCabinet = 0;
                             Vector3 newPosition = Vector3.zero;
@@ -575,14 +689,23 @@ public class InputManager : MonoBehaviour
                             preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<Renderer>().material = preGeneratedItem.GetComponent<DraggableItem>().YellowHighlightPart;
                             preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<ConnectedCheck>().isConnected = false;
                         }
+                        if (originPositon.name.ToLower().Contains("backsplash") && !isOutsideWall)
+                        {
+                            preGeneratedItem.transform.position = originPositon.GetChild(0).position;
+                            preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<Renderer>().material = preGeneratedItem.GetComponent<DraggableItem>().YellowHighlightPart;
+                            preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart.GetComponent<ConnectedCheck>().isConnected = true;
+                        }
                     }
                     offsetMultiplier = Vector3.zero;
                     DisableAllAvailableHighlightPart();
-                    Wall currentSelectedWall = DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>();
-                    currentSelectedWall.wallCabinets.RemoveAll(obj => obj == null);
-                    currentSelectedWall.wallCabinets.Add(preGeneratedItem);
+
+                    currentSelectedWall = DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>();
+                    if(preGeneratedItem != null)
+                        currentSelectedWall.wallCabinets.Add(preGeneratedItem.transform);
+
                     preGeneratedItem.GetComponentInChildren<QuikOutline>().enabled = false;
                     StartCoroutine(DisableOutlineAfterDelay(preGeneratedItem.GetComponentInChildren<QuikOutline>()));
+                    DoubleClickDetector.Instance.FindExtreamObjects();
                 }
                 originPositon = null;
                 preGeneratedItem = null;
@@ -594,7 +717,10 @@ public class InputManager : MonoBehaviour
                     originPositon = null;
                 }
             }
+            
+            currentSelectedWall.wallCabinets.RemoveAll(obj => obj == null || obj.Equals(null));
         }
+
     }
 
     IEnumerator DisableOutlineAfterDelay(QuikOutline quikOutline)
@@ -609,7 +735,7 @@ public class InputManager : MonoBehaviour
 
     private void EnableAllAvailableHighlightPart()
     {
-        if (!preGeneratedItem.name.ToLower().Contains("wallmount") && !preGeneratedItem.name.ToLower().Contains("overheads") && !preGeneratedItem.name.ToLower().Contains("ws") && !preGeneratedItem.name.ToLower().Contains("sink40"))
+        if (!preGeneratedItem.name.ToLower().Contains("wallmount") && !preGeneratedItem.name.ToLower().Contains("overheads") && !preGeneratedItem.name.ToLower().Contains("ws") && !preGeneratedItem.name.ToLower().Contains("sink40") && !preGeneratedItem.name.ToLower().Contains("bs"))
         {
             foreach (Transform child in RoomModelManager.Instance.CabinetDesign)
             {
@@ -722,6 +848,34 @@ public class InputManager : MonoBehaviour
                 EnableWorksurfaceHighlight("_40Sink");
             }
         }
+
+        if (preGeneratedItem.name.ToLower().Contains("bs"))
+        {
+            if(preGeneratedItem.name.Contains("Aluminium40"))
+            {
+                EnableBacksplashHighlight("_40Backsplash");
+            }
+            if (preGeneratedItem.name.Contains("Aluminium60"))
+            {
+                EnableBacksplashHighlight("_60Backsplash");
+            }
+            if (preGeneratedItem.name.Contains("Aluminium80"))
+            {
+                EnableBacksplashHighlight("_80Backsplash");
+            }
+            if (preGeneratedItem.name.Contains("Procore40"))
+            {
+                EnableBacksplashHighlight("_40Backsplash");
+            }
+            if (preGeneratedItem.name.Contains("Procore60"))
+            {
+                EnableBacksplashHighlight("_60Backsplash");
+            }
+            if (preGeneratedItem.name.Contains("Procore80"))
+            {
+                EnableBacksplashHighlight("_80Backsplash");
+            }
+        }
         isHighLightDisplayed = true;
     }
 
@@ -747,7 +901,6 @@ public class InputManager : MonoBehaviour
                                         if (!item.GetComponent<ConnectedCheck>().isConnected)
                                         {
                                             item.SetActive(true);
-
                                         }
                                     }
                                 }
@@ -827,7 +980,6 @@ public class InputManager : MonoBehaviour
                                         if (!item.GetComponent<ConnectedCheck>().isConnected)
                                         {
                                             item.SetActive(true);
-
                                         }
                                     }
                                 }
@@ -1033,14 +1185,99 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void EnableBacksplashHighlight(string type)
+    {
+        switch (type)
+        {
+            case "_40Backsplash":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._40inBacksplash != null)
+                            {
+                                if (draggableItem._40inBacksplash.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._40inBacksplash)
+                                    {
+                                        if (!item.GetComponent<ConnectedCheck>().isConnected)
+                                        {
+                                            item.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case "_60Backsplash":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)  
+                        {
+                            if (draggableItem._60inBacksplash != null)
+                            {
+                                if (draggableItem._60inBacksplash.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._60inBacksplash)
+                                    {
+                                        if (!item.GetComponent<ConnectedCheck>().isConnected)
+                                        {
+                                            item.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case "_80Backsplash":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._80inBacksplash != null)
+                            {
+                                if (draggableItem._80inBacksplash.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._80inBacksplash)
+                                    {
+                                        if (!item.GetComponent<ConnectedCheck>().isConnected)
+                                        {
+                                            item.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
     private void DisableAllAvailableHighlightPart()
     {
         foreach (Transform child in RoomModelManager.Instance.CabinetDesign)
-        {
+        {   
             DraggableItem draggableItem = child.GetComponent<DraggableItem>();
-
+            
             if (draggableItem)
-            {
+            {   
                 foreach (var item in draggableItem.NonConnectedParts)
                 {
                     item.gameObject.SetActive(false);
@@ -1173,6 +1410,39 @@ public class InputManager : MonoBehaviour
                         }
                     }
                 }
+
+                if (draggableItem._40inBacksplash != null)
+                {
+                    if (draggableItem._40inBacksplash.Length > 0)
+                    {
+                        foreach (var item in draggableItem._40inBacksplash)
+                        {
+                            item.SetActive(false);
+                        }
+                    }
+                }
+
+                if (draggableItem._60inBacksplash != null)
+                {
+                    if (draggableItem._60inBacksplash.Length > 0)
+                    {
+                        foreach (var item in draggableItem._60inBacksplash)
+                        {
+                            item.SetActive(false);
+                        }
+                    }
+                }
+
+                if (draggableItem._80inBacksplash != null)
+                {
+                    if (draggableItem._80inBacksplash.Length > 0)
+                    {
+                        foreach (var item in draggableItem._80inBacksplash)
+                        {
+                            item.SetActive(false);
+                        }
+                    }
+                }
             }
         }
         isHighLightDisplayed = false;
@@ -1182,7 +1452,6 @@ public class InputManager : MonoBehaviour
     {
         foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
         {
-
             if (obj.CompareTag("overheads") && obj.scene.IsValid())
             {
                 if (obj != currectSelectedPart)
@@ -1219,19 +1488,32 @@ public class InputManager : MonoBehaviour
                     obj.GetComponent<Renderer>().material = preGeneratedItem.GetComponent<DraggableItem>().YellowHighlightPart;
                     obj.GetComponent<Renderer>().sortingOrder = 5;
                     obj.GetComponent<ConnectedCheck>().isConnected = false;
-
-                    //Vector3 newScale = obj.transform.localScale;
-                    //newScale.y = 0.15f;
-                    //obj.transform.localScale = newScale;
                 }
                 else
                 {
                     obj.GetComponent<Renderer>().sortingOrder = 10;
                     obj.GetComponent<ConnectedCheck>().isConnected = true;
+                }
+            }
+        }
+    }
 
-                    //Vector3 newScale = obj.transform.localScale;
-                    //newScale.y = 0.175f;
-                    //obj.transform.localScale = newScale;
+    private void UpdateHighlightBacksplashes(GameObject currectSelectedPart)
+    {
+        foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
+        {
+            if (obj.CompareTag("backsplash") && obj.scene.IsValid())
+            {
+                if (obj != currectSelectedPart)
+                {
+                    obj.GetComponent<Renderer>().material = preGeneratedItem.GetComponent<DraggableItem>().YellowHighlightPart;
+                    obj.GetComponent<Renderer>().sortingOrder = 5;
+                    obj.GetComponent<ConnectedCheck>().isConnected = false;
+                }
+                else
+                {
+                    obj.GetComponent<Renderer>().sortingOrder = 10;
+                    obj.GetComponent<ConnectedCheck>().isConnected = true;
                 }
             }
         }

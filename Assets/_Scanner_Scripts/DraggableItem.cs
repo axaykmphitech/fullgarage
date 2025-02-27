@@ -3,24 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DraggableItem : MonoBehaviour
 {
-    public bool isGroundCabinet;
-    public bool isWallMount;
-    public bool isOverHead;
-    public bool isWorksurface;
+    public bool              isGroundCabinet;
+    public bool                  isWallMount;
+    public bool                   isOverHead;
+    public bool                isWorksurface;
+    public bool                 isBacksplash;
     public bool isCollidingWithOtherCabinets;
 
     public GameObject currentSelectedPart;
 
     [Space(15)]
     public List<GameObject> OthersCabinetsPart;
-    public List<GameObject> NonConnectedParts;
-    public List<GameObject> ConnectedParts;
+    public List<GameObject>  NonConnectedParts;
+    public List<GameObject>     ConnectedParts;
 
-    public GameObject[] _40inWallMountHighlight;
-    public GameObject[] _20inLeftWallMountHighlight;
+    public GameObject[]      _40inWallMountHighlight;
+    public GameObject[]  _20inLeftWallMountHighlight;
     public GameObject[] _20inRightWallMountHighlight;
 
     [Space(15)]
@@ -36,6 +38,11 @@ public class DraggableItem : MonoBehaviour
     public GameObject[] _40inSink;
 
     [Space(15)]
+    public GameObject[] _40inBacksplash;
+    public GameObject[] _60inBacksplash;
+    public GameObject[] _80inBacksplash;
+
+    [Space(15)]
     public Material YellowHighlightPart;
     public Material GreenHighlightPart;
 
@@ -44,7 +51,12 @@ public class DraggableItem : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (!DoubleClickDetector.Instance.isWallOpen) return;
+
+        GetComponentInChildren<QuikOutline>().enabled = true;
+        GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
 
         float currentTime = Time.time;
 
@@ -55,7 +67,6 @@ public class DraggableItem : MonoBehaviour
             InputManager.Instance.originPositon = null;
             UpdateConnections();
         }
-
         lastClickTime = currentTime;
     }
 
@@ -140,8 +151,6 @@ public class DraggableItem : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //Debug.Log(other.name);
-
         if(other.gameObject.tag.Equals("left") || other.gameObject.tag.Equals("right") || other.gameObject.tag.Equals("wallmount") || other.gameObject.tag.Equals("overheads"))
         {
             if (InputManager.Instance.preGeneratedItem == gameObject)
@@ -221,11 +230,11 @@ public class DraggableItem : MonoBehaviour
             if(!OthersCabinetsPart.Contains(currentSelectedPart))
                 OthersCabinetsPart.Add(currentSelectedPart);
 
-            if (currentSelectedPart.tag.Equals("left"))
+            if(currentSelectedPart.tag.Equals("left"))
             {
                 RemoveGameObjectByTag("right", currentSelectedPart.transform.parent.GetComponent<DraggableItem>());
             }
-            if (currentSelectedPart.tag.Equals("right"))
+            if(currentSelectedPart.tag.Equals("right"))
             {
                 RemoveGameObjectByTag("left", currentSelectedPart.transform.parent.GetComponent<DraggableItem>());
             }

@@ -4,8 +4,8 @@ using System.IO;
 
 public class FileManager : MonoBehaviour
 {
-    private string filePath;
-    public GltfAsset gltfAsset;
+    private string          filePath;
+    public GltfAsset       gltfAsset;
     public bool isSetUpWalls = false; 
 
     public static FileManager Instance;

@@ -26,9 +26,6 @@ namespace UnityEngine.UI
         public ExtensionsToggle SelectedToggle { get; private set; }
 
 
-        protected ExtensionsToggleGroup()
-        { }
-
         private void ValidateToggleIsInGroup(ExtensionsToggle toggle)
         {
             if (toggle == null || !m_Toggles.Contains(toggle))

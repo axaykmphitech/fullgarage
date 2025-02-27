@@ -6,26 +6,26 @@ using UnityEngine.UI;
 public class Cabinets : MonoBehaviour
 {
     [Header("UIPanel")]
-    public GameObject _40ModualsPanel;
-    public GameObject _20ModualsPanel;
-    public GameObject OverheadsPanel;
+    public GameObject   _40ModualsPanel;
+    public GameObject   _20ModualsPanel;
+    public GameObject    OverheadsPanel;
     public GameObject ApplicationsPanel;
 
     [Header("40")]
-    public GameObject _3DrawerBase;
-    public GameObject _5DrawerBase;
+    public GameObject  _3DrawerBase;
+    public GameObject  _5DrawerBase;
     public GameObject _10DrawerBase;
-    public GameObject _2DoorBase;
-    public GameObject Tallcabinets;
-    public GameObject SinkBase;
-    public GameObject Wallmount;
+    public GameObject    _2DoorBase;
+    public GameObject  Tallcabinets;
+    public GameObject      SinkBase;
+    public GameObject     Wallmount;
 
     [Header("20")]
-    public GameObject DoorBaseLeft;
-    public GameObject DoorBaseRight;
-    public GameObject LockerLeft;
-    public GameObject LockerRight;
-    public GameObject WallmountLeft;
+    public GameObject   DoorBaseLeft;
+    public GameObject  DoorBaseRight;
+    public GameObject     LockerLeft;
+    public GameObject    LockerRight;
+    public GameObject  WallmountLeft;
     public GameObject WallmountRight;
 
     [Header("Overheads")]
@@ -35,9 +35,9 @@ public class Cabinets : MonoBehaviour
 
     [Header("Applications")]
     public GameObject BeverageCenter;
-    public GameObject Freezer;
-    public GameObject Fridge;
-    public GameObject Pantry;
+    public GameObject        Freezer;
+    public GameObject         Fridge;
+    public GameObject         Pantry;
 
     private GameObject prefabToInstantiate;
 
@@ -150,7 +150,7 @@ public class Cabinets : MonoBehaviour
             GameObject cabinet;
             InputManager.Instance.preGeneratedItem = cabinet = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
 
-            Transform doorDrawers = cabinet.transform.Find("Doors_Drawers");
+            Transform doorDrawers =   cabinet.transform.Find("Doors_Drawers");
             Transform handleDrawers = cabinet.transform.Find("Handle");
 
             if (doorDrawers != null)
@@ -172,7 +172,7 @@ public class Cabinets : MonoBehaviour
 
             InputManager.Instance.preGeneratedItem.transform.SetParent(RoomModelManager.Instance.CabinetDesign);
             InputManager.Instance.isDragging = true;
-
+           
 //#if UNITY_EDITOR
 //            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
 //#endif

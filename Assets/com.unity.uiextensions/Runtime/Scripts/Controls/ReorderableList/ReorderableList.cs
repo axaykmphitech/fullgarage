@@ -95,7 +95,6 @@ namespace UnityEngine.UI.Extensions
 
         private void Start()
         {
-
             if (ContentLayout == null)
             {
                 Debug.LogError("You need to have a child LayoutGroup content set for the list: " + name, gameObject);
@@ -142,6 +141,7 @@ namespace UnityEngine.UI.Extensions
         [Serializable]
         public class ReorderableListHandler : UnityEvent<ReorderableListEventStruct>
         {
+
         }
 
         public void TestReOrderableListTarget(ReorderableListEventStruct item)
