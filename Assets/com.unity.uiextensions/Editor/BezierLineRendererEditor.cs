@@ -66,7 +66,7 @@ namespace UnityEngine.UI.Extensions
                             curveRenderer.Points[i] = p;
                         }
                         curveRenderer.transform.gameObject.SetActive(false);
-                        curveRenderer.transform.gameObject.SetActive(true);
+                        curveRenderer.transform.gameObject.SetActive (true);
                     }
                 }
             }

@@ -121,10 +121,10 @@ public class InputManager : MonoBehaviour
                 bottomLeftOrigin  = centerOrigin + new Vector3(-bounds.extents.x, -bounds.extents.y, -bounds.extents.z);
                 bottomRightOrigin = centerOrigin + new Vector3(bounds.extents.x, -bounds.extents.y, -bounds.extents.z);
 
-                float dotRight   = Vector3.Dot(wallNormal.normalized, Vector3.right);
-                float dotLeft    = Vector3.Dot(wallNormal.normalized, Vector3.left);
+                float dotRight   = Vector3.Dot(wallNormal.normalized, Vector3.right)  ;
+                float dotLeft    = Vector3.Dot(wallNormal.normalized, Vector3.left)   ;
                 float dotForward = Vector3.Dot(wallNormal.normalized, Vector3.forward);
-                float dotBack    = Vector3.Dot(wallNormal.normalized, Vector3.back);
+                float dotBack    = Vector3.Dot(wallNormal.normalized, Vector3.back)   ;
 
 
                 if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
@@ -706,6 +706,10 @@ public class InputManager : MonoBehaviour
                     preGeneratedItem.GetComponentInChildren<QuikOutline>().enabled = false;
                     StartCoroutine(DisableOutlineAfterDelay(preGeneratedItem.GetComponentInChildren<QuikOutline>()));
                     DoubleClickDetector.Instance.FindExtreamObjects();
+
+                    DistanceFromWall.Instance.DestroyAllFromCabinetToWallMeasurement();
+                    DistanceFromWall.Instance.currentSelectedObject = null;
+                    DistanceFromWall.Instance.tempObject = null;
                 }
                 originPositon = null;
                 preGeneratedItem = null;

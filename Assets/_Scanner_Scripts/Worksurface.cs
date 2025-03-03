@@ -35,22 +35,22 @@ public class Worksurface : MonoBehaviour
     public void OpenStainlessSteelWS()
     {
         stainlessSteelWorksurface.SetActive(true);
-        powderCoatedWorksurface. SetActive(false);
-        maplewoodWorksurface.    SetActive(false);
+        powderCoatedWorksurface.  SetActive(false);
+        maplewoodWorksurface.     SetActive(false);
     }
 
     public void OpenPowderCoatedWS()
     {
-        stainlessSteelWorksurface.SetActive(false);
+        stainlessSteelWorksurface. SetActive(false);
         powderCoatedWorksurface.   SetActive(true);
-        maplewoodWorksurface.     SetActive(false);
+        maplewoodWorksurface.      SetActive(false);
     }
 
     public void OpenMapleWoodWS()
     {
-        stainlessSteelWorksurface.SetActive(false);
-        powderCoatedWorksurface.SetActive(false);
-        maplewoodWorksurface.SetActive(true);
+        stainlessSteelWorksurface.  SetActive(false);
+        powderCoatedWorksurface.    SetActive(false);
+        maplewoodWorksurface.       SetActive(true);
     }
 
     private GameObject prefabToInstantiate;

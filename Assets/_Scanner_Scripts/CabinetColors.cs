@@ -100,6 +100,7 @@ public class CabinetColors : MonoBehaviour
             {
                 if (item.GetComponentInChildren<QuikOutline>().enabled)
                 {
+                    Debug.Log("find door drawers change colors");
                     onlySelected = true;
                     break;
                 }
@@ -110,6 +111,7 @@ public class CabinetColors : MonoBehaviour
                 {
                     if (item.GetComponentInChildren<QuikOutline>().enabled)
                     {
+                        Debug.Log("find door drawers change colors");
                         Transform doorsDrawers = item.Find("Doors_Drawers");
                         if (doorsDrawers != null)
                         {

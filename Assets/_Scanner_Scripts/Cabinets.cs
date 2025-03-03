@@ -150,7 +150,7 @@ public class Cabinets : MonoBehaviour
             GameObject cabinet;
             InputManager.Instance.preGeneratedItem = cabinet = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
 
-            Transform doorDrawers =   cabinet.transform.Find("Doors_Drawers");
+            Transform doorDrawers   =   cabinet.transform.Find("Doors_Drawers");
             Transform handleDrawers = cabinet.transform.Find("Handle");
 
             if (doorDrawers != null)

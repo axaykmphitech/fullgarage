@@ -26,7 +26,7 @@ public class DraggableItem : MonoBehaviour
     public GameObject[] _20inRightWallMountHighlight;
 
     [Space(15)]
-    public GameObject[] _40inOverheadHighlight;
+    public GameObject[] _40inOverheadHighlight; 
     public GameObject[] _60inOverheadHighlight;
     public GameObject[] _80inOverheadhighlight;
 
@@ -55,8 +55,13 @@ public class DraggableItem : MonoBehaviour
 
         if (!DoubleClickDetector.Instance.isWallOpen) return;
 
+        foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
+        {
+            item.GetComponentInChildren<QuikOutline>().enabled = false;
+        }
         GetComponentInChildren<QuikOutline>().enabled = true;
         GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
+        DistanceFromWall.Instance.currentSelectedObject = gameObject;
 
         float currentTime = Time.time;
 
@@ -98,7 +103,7 @@ public class DraggableItem : MonoBehaviour
                 if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter && InputManager.Instance.isCabinetOnWallTopLeft && InputManager.Instance.isCabinetOnWallTopRight && InputManager.Instance.isCabinetOnWallBottomLeft && InputManager.Instance.isCabinetOnWallBottomRight)
                 {
                     other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
-                    GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
+                    GetComponentInChildren<QuikOutline>().OutlineColor =        Color.green;
                 }
             }
             if (other.gameObject.tag.Equals("right") && !isCollidingWithOtherCabinets)

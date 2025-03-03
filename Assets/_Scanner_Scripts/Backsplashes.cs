@@ -129,7 +129,7 @@ public class Backsplashes : MonoBehaviour
             return;
         }
 
-        Vector3 position =    before.transform.position;
+        Vector3 position    = before.transform.position;
         Quaternion rotation = before.transform.rotation;
 
         GameObject afterInstance = Instantiate(afterPrefab, position, rotation);

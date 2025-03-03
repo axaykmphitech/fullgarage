@@ -38,7 +38,7 @@ public class ConnectedCheck : MonoBehaviour
                 leftOrigin =  centerOrigin - new Vector3(0, 0, bounds.extents.z - 0.01f);
                 rightOrigin = centerOrigin + new Vector3(0, 0, bounds.extents.z - 0.01f);
 
-                topLeftOrigin =  leftOrigin + new Vector3(0, bounds.extents.y + 0.05f, 0);
+                topLeftOrigin =  leftOrigin + new  Vector3(0,  bounds.extents.y + 0.05f, 0);
                 topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y + 0.05f, 0);
             }
 
@@ -141,10 +141,10 @@ public class ConnectedCheck : MonoBehaviour
 
             if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
             {
-                leftOrigin = centerOrigin - new Vector3(offset, 0, bounds.extents.z - 0.03f);
+                leftOrigin = centerOrigin -  new Vector3(offset, 0, bounds.extents.z -  0.03f);
                 rightOrigin = centerOrigin + new Vector3(-offset, 0, bounds.extents.z - 0.03f);
 
-                topLeftOrigin = leftOrigin +   new Vector3(0, bounds.extents.y - 0.05f, 0);
+                topLeftOrigin =  leftOrigin +  new Vector3(0, bounds.extents.y - 0.05f, 0);
                 topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y - 0.05f, 0);
             }
 
@@ -163,7 +163,7 @@ public class ConnectedCheck : MonoBehaviour
             Ray rayTopRightBs = new Ray(topRightOrigin, direction);
             Debug.DrawRay(rayTopRightBs.origin, direction * 100, Color.green);
 
-            isBsLeftTouchBs = false;
+            isBsLeftTouchBs  = false;
             isBsRightTouchBs = false;
 
             if (Physics.Raycast(rayTopLeftBs, out RaycastHit hitInfoTopLeftBs))

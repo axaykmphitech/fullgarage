@@ -119,7 +119,7 @@ public class DoubleClickDetector : MonoBehaviour
         {
             camera.transform.forward =  targetObject.transform.right;
             camera.transform.position = targetObject.GetComponent<Collider>().bounds.center + new Vector3(offset,0,0);
-            //left
+            //leftvgm
         }
         else if (normal == new Vector3(0, 0, -1))
         {
@@ -135,27 +135,27 @@ public class DoubleClickDetector : MonoBehaviour
         }
         UIManager.Instance.OpenWallUi();
 
-        float widthInMeters;
-        float widthInFeet;
+        float widthInMeters ;
+        float widthInInches ;
         float heightInMeters;
-        float heightInFeet;
+        float heightInInches;
 
-        float dotRight = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.right);
-        float dotLeft = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
+        float dotRight =     Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.right);
+        float dotLeft =       Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
         float dotForward = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.forward);
-        float dotBack = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.back);
+        float dotBack =       Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.back);
 
         Bounds bounds = selectedWall.GetComponent<Renderer>().bounds;
 
         if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
         {
             widthInMeters = bounds.size.z;
-            widthInFeet = widthInMeters * 3.28084f;
+            widthInInches = widthInMeters * 39.3701f;
 
-            Vector3 leftEdge = new Vector3(bounds.center.x, bounds.max.y + 1, bounds.min.z);
-            Vector3 rightEdge = new Vector3(bounds.center.x, bounds.max.y + 1, bounds.max.z);
+            Vector3 leftEdge =   new Vector3(bounds.center.x, bounds.max.y + 1, bounds.min.z);
+            Vector3 rightEdge =  new Vector3(bounds.center.x, bounds.max.y + 1, bounds.max.z);
             Vector3 bottomEdge = new Vector3(bounds.center.x, bounds.min.y, bounds.min.z - 1);
-            Vector3 topEdge = new Vector3(bounds.center.x, bounds.max.y, bounds.min.z - 1);
+            Vector3 topEdge =    new Vector3(bounds.center.x, bounds.max.y, bounds.min.z - 1);
 
             Vector3 cameraForward = wallCameraObject.transform.forward;
             cameraForward.y = 0;
@@ -173,21 +173,21 @@ public class DoubleClickDetector : MonoBehaviour
             AllDimensions.Add(lineObjWidth);
 
             GameObject textObjectW = new GameObject("DimensionText");
-            textObjectW.transform.position = (leftEdge + rightEdge) / 2 + Vector3.right * 0.5f + (Vector3.up * -0.3f);
-            textObjectW.transform.localScale = Vector3.one * 0.02f;
+            textObjectW.transform.position = (leftEdge + rightEdge) / 2 + Vector3.right * 0.5f + (Vector3.up * 0.3f);
+            textObjectW.transform.localScale = Vector3.one * 0.015f;
             Canvas canvasW = textObjectW.AddComponent<Canvas>();
             textObjectW.transform.rotation = Quaternion.LookRotation(cameraForward);
             Text textComponentW = textObjectW.AddComponent<Text>();
             textComponentW.enabled = UIManager.Instance.isDimensionsShow;
-            textComponentW.text = widthInFeet.ToString("F1") + " ft";
+            textComponentW.text = widthInInches.ToString("F1") + " in";
             textComponentW.font = dimensionFont;
-            textComponentW.color = Color.black;
+            textComponentW.color =  Color.black;
             textComponentW.alignment = TextAnchor.MiddleCenter;
             canvasW.sortingOrder = 40;
             AllDimensions.Add(textObjectW);
 
             heightInMeters = bounds.size.y;
-            heightInFeet = heightInMeters * 3.28084f;
+            heightInInches = heightInMeters * 39.3701f;
 
             GameObject lineObjHeight = new GameObject("MeasurementLine");
             LineRenderer lineRendererHeight = lineObjHeight.AddComponent<LineRenderer>();
@@ -202,13 +202,13 @@ public class DoubleClickDetector : MonoBehaviour
             AllDimensions.Add(lineObjHeight);
 
             GameObject textObjectH = new GameObject("DimensionText");
-            textObjectH.transform.position = (bottomEdge + topEdge) / 2 + Vector3.right * 0.5f + (Vector3.forward * 0.5f);
-            textObjectH.transform.localScale = Vector3.one * 0.02f;
+            textObjectH.transform.position = (bottomEdge + topEdge) / 2 + Vector3.right * 0.5f + (Vector3.forward * -0.5f);
+            textObjectH.transform.localScale = Vector3.one * 0.015f;
             Canvas canvas = textObjectH.AddComponent<Canvas>();
             textObjectH.transform.rotation = Quaternion.LookRotation(cameraForward);
             Text textComponentH = textObjectH.AddComponent<Text>();
             textComponentH.enabled = UIManager.Instance.isDimensionsShow;
-            textComponentH.text = heightInFeet.ToString("F1") + " ft";
+            textComponentH.text = heightInInches.ToString("F1") + " in";
             textComponentH.font = dimensionFont;
             textComponentH.color =  Color.black;
             textComponentH.alignment = TextAnchor.MiddleCenter;
@@ -218,7 +218,7 @@ public class DoubleClickDetector : MonoBehaviour
         if (Mathf.Abs(dotForward - 1f) < 0.01f || Mathf.Abs(dotBack - 1f) < 0.01f)
         {
             widthInMeters = bounds.size.x;
-            widthInFeet = widthInMeters * 3.28084f;
+            widthInInches = widthInMeters * 39.3701f;
 
             Vector3 cameraForward = wallCameraObject.transform.forward;
             cameraForward.y = 0;
@@ -241,13 +241,13 @@ public class DoubleClickDetector : MonoBehaviour
             AllDimensions.Add(lineObjWidth);
 
             GameObject textObjectW = new GameObject("DimensionText");
-            textObjectW.transform.position = (leftEdge + rightEdge) / 2 + Vector3.right * 0.5f + (Vector3.up * -0.3f);
-            textObjectW.transform.localScale = Vector3.one * 0.02f;
+            textObjectW.transform.position = (leftEdge + rightEdge) / 2 + Vector3.right * 0.5f + (Vector3.up * 0.3f);
+            textObjectW.transform.localScale = Vector3.one * 0.015f;
             Canvas canvasW = textObjectW.AddComponent<Canvas>();
             textObjectW.transform.rotation = Quaternion.LookRotation(cameraForward);
             Text textComponentW = textObjectW.AddComponent<Text>();
             textComponentW.enabled = UIManager.Instance.isDimensionsShow;
-            textComponentW.text = widthInFeet.ToString("F1") + " ft";
+            textComponentW.text = widthInInches.ToString("F1") + " in";
             textComponentW.font = dimensionFont;
             textComponentW.color = Color.black;
             textComponentW.alignment = TextAnchor.MiddleCenter;
@@ -257,7 +257,7 @@ public class DoubleClickDetector : MonoBehaviour
             /////////////////////////////////////////    
 
             heightInMeters = bounds.size.y;
-            heightInFeet = heightInMeters * 3.28084f;
+            heightInInches = heightInMeters * 39.3701f;
 
             GameObject lineObjHeight = new GameObject("MeasurementLine");
             LineRenderer lineRendererHeight = lineObjHeight.AddComponent<LineRenderer>();
@@ -272,15 +272,15 @@ public class DoubleClickDetector : MonoBehaviour
             AllDimensions.Add(lineObjHeight);
 
             GameObject textObjectH = new GameObject("DimensionText");
-            textObjectH.transform.position = (bottomEdge + topEdge) / 2 + Vector3.right * 0.5f;
-            textObjectH.transform.localScale = Vector3.one * 0.02f;
+            textObjectH.transform.position = (bottomEdge + topEdge) / 2 + Vector3.right * -0.5f;
+            textObjectH.transform.localScale = Vector3.one * 0.015f;
             Canvas canvas = textObjectH.AddComponent<Canvas>();
             textObjectH.transform.rotation = Quaternion.LookRotation(cameraForward);
             canvas.renderMode = RenderMode.WorldSpace;
             canvas.sortingOrder = 40;
             Text textComponentH = textObjectH.AddComponent<Text>();
             textComponentH.enabled = UIManager.Instance.isDimensionsShow;
-            textComponentH.text = heightInFeet.ToString("F1") + " ft";
+            textComponentH.text = heightInInches.ToString("F1") + " in";
             textComponentH.font = dimensionFont;
             textComponentH.color =  Color.black;
             textComponentH.alignment = TextAnchor.MiddleCenter;
@@ -296,7 +296,7 @@ public class DoubleClickDetector : MonoBehaviour
         {
             if(item != selectedWall && item.name.Contains("wall"))
             {
-                item.gameObject.SetActive(false);
+                //item.gameObject.SetActive(false);
             }
         }
     }
@@ -524,6 +524,8 @@ public class DoubleClickDetector : MonoBehaviour
             textComponentH.color = Color.black;
             textComponentH.alignment = TextAnchor.MiddleCenter;
             AllDimensions.Add(textObjectH);
+
+
         }
         else
         {

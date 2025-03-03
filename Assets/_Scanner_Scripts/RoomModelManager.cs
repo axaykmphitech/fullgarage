@@ -19,6 +19,7 @@ public class RoomModelManager : MonoBehaviour
     public float    overheadYPosition;
     public float worksurfaceYPosition;
     public float  backsplashYPosition;
+    public float cabinetCenterPosition;
 
     public static RoomModelManager Instance;
 
@@ -79,8 +80,11 @@ public class RoomModelManager : MonoBehaviour
         floorPositionY = allFloor[0].gameObject.AddComponent<BoxCollider>().bounds.center.y;
         wallmountYPosition = floorPositionY +  1.497300f ;
         overheadYPosition  = floorPositionY +  2.080293f ;
-        worksurfaceYPosition = floorPositionY +    0.94f ;
-        backsplashYPosition =  floorPositionY +   1.218f ;
+        worksurfaceYPosition =  floorPositionY +    0.94f;
+        backsplashYPosition =   floorPositionY +  1.218f ;
+        cabinetCenterPosition = floorPositionY +  0.5f   ;
+
+
         UIManager.Instance.loadingPanel. SetActive(false);
         UIManager.Instance.startMenu.    SetActive(false);
         UIManager.Instance.cabinetMenu.   SetActive(true);
@@ -93,7 +97,7 @@ public class RoomModelManager : MonoBehaviour
 
     public void EnableAllWalls()
     {
-        foreach (Transform item in RoomModelParent.transform.GetChild(0).transform)
+        foreach (Transform item in RoomModelParent.transform.GetChild(0). transform)
         {
             if(!item.gameObject.name.Contains("ceiling"))
             {

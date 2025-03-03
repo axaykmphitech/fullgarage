@@ -159,9 +159,9 @@ namespace UnityEngine.UI.Extensions
                     var smallCharOffset = smallChar ? -letterOffset/4 : 0;
                     
                     vert1.position += new Vector3(-vert1.position.x + offsetX + -.5f * charWidth + smallCharOffset, 0, 0);
-                    vert2.position += new Vector3(-vert2.position.x + offsetX + .5f * charWidth + smallCharOffset, 0, 0);
-                    vert3.position += new Vector3(-vert3.position.x + offsetX + .5f * charWidth + smallCharOffset, 0, 0);
-                    vert4.position += new Vector3(-vert4.position.x + offsetX + .5f * charWidth + smallCharOffset, 0, 0);
+                    vert2.position += new Vector3(-vert2.position.x + offsetX + .5f * charWidth +  smallCharOffset, 0, 0);
+                    vert3.position += new Vector3(-vert3.position.x + offsetX + .5f * charWidth +  smallCharOffset, 0, 0);
+                    vert4.position += new Vector3(-vert4.position.x + offsetX + .5f * charWidth +  smallCharOffset, 0, 0);
                     vert5.position += new Vector3(-vert5.position.x + offsetX + -.5f * charWidth + smallCharOffset, 0, 0);
                     vert6.position += new Vector3(-vert6.position.x + offsetX + -.5f * charWidth + smallCharOffset, 0, 0);
 

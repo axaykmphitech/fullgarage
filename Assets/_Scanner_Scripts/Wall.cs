@@ -10,6 +10,9 @@ public class Wall : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
+        DistanceFromWall.Instance.DestroyAllFromCabinetToWallMeasurement();
+        DistanceFromWall.Instance.currentSelectedObject = null;
+        DistanceFromWall.Instance.tempObject = null;
         foreach (Transform item in RoomModelManager.Instance.CabinetDesign)
         {
             item.GetComponentInChildren<QuikOutline>().enabled = false;

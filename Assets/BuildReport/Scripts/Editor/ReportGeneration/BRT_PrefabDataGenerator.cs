@@ -9,6 +9,7 @@ namespace BuildReportTool
 	{
 		public static void CreateForUsedAssetsOnly(PrefabData data, BuildReportTool.BuildInfo buildInfo, bool debugLog = false)
 		{
+			Debug.Log("create for used assets only");
 			if (buildInfo == null)
 			{
 				if (debugLog) Debug.LogError("Can't create MeshData for Used Assets, BuildInfo is null");
@@ -24,6 +25,7 @@ namespace BuildReportTool
 
 		static void AppendPrefabData(PrefabData data, IList<SizePart> assets, bool overwriteExistingEntries, bool debugLog = false)
 		{
+			Debug.Log("append prefab data");
 			var prefabDataEntries = data.GetPrefabData();
 
 			for (int n = 0; n < assets.Count; ++n)
@@ -55,6 +57,7 @@ namespace BuildReportTool
 
 		static PrefabData.Entry CreateEntry(string assetPath, bool debugLog = false)
 		{
+			Debug.Log("create entry");
 			var prefabAsset = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
 			if (prefabAsset == null)
 			{
@@ -82,6 +85,7 @@ namespace BuildReportTool
 
 		static int UpdateChildStaticEditorFlags(int rootLevelStaticEditorFlags, int childStaticEditorFlags, int flagValue, Transform rootTransform)
 		{
+			Debug.Log("update child static editor flags");
 			if ((rootLevelStaticEditorFlags & flagValue) != 0)
 			{
 				// root level is already on
@@ -115,6 +119,7 @@ namespace BuildReportTool
 
 		static int GetIntFlags(StaticEditorFlags flags)
 		{
+			Debug.Log("get int flags");
 			// Unity might change the value of these flags in a future version, so we explicitly convert it ourselves
 			int intFlags = 0;
 

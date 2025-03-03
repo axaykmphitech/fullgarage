@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenWallUi()
     {
-        singleWallMenu.SetActive(true);
+        singleWallMenu. SetActive(true);
         _3DRoomMenu.   SetActive(false);
         urlMenu.       SetActive(false);
     }
@@ -110,9 +110,9 @@ public class UIManager : MonoBehaviour
     public void OpenCabinetMenu()
     {
         cabinetMenu.SetActive(true);
-        colorMenu.SetActive(false);
+        colorMenu.SetActive(false) ;
         worksurfaceMenu.SetActive(false);
-        backsplashMenu.SetActive(false);
+        backsplashMenu.SetActive(false) ;
     }
 
     public void OpenColorMenu()
@@ -120,15 +120,15 @@ public class UIManager : MonoBehaviour
         cabinetMenu.SetActive(false);
         colorMenu.SetActive(true);
         worksurfaceMenu.SetActive(false);
-        backsplashMenu.SetActive(false);
+        backsplashMenu.SetActive(false) ;
     }
 
     public void OpenWorksurfaceMenu()
     {
         cabinetMenu.SetActive(false);
         colorMenu.SetActive(false);
-        worksurfaceMenu.SetActive(true);
-        backsplashMenu.SetActive(false);
+        worksurfaceMenu.SetActive(true) ;
+        backsplashMenu.SetActive (false);
     }
 
     public void OpenBacksplashMenu()
@@ -136,7 +136,7 @@ public class UIManager : MonoBehaviour
         cabinetMenu.SetActive(false);
         colorMenu.SetActive(false);
         worksurfaceMenu.SetActive(false);
-        backsplashMenu.SetActive(true);
+        backsplashMenu.SetActive (true);
     }
 
     private void FilesWereOpenedEventHandler(File[] files)
