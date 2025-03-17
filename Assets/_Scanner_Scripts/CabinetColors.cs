@@ -111,11 +111,16 @@ public class CabinetColors : MonoBehaviour
                 {
                     if (item.GetComponentInChildren<QuikOutline>().enabled)
                     {
-                        Debug.Log("find door drawers change colors");
-                        Transform doorsDrawers = item.Find("Doors_Drawers");
-                        if (doorsDrawers != null)
+                        foreach (Transform child in item.GetComponentsInChildren<Transform>())
                         {
-                            doorsDrawers.GetComponent<Renderer>().material = color;
+                            if (child.name == "Doors_Drawers")
+                            {
+                                Renderer renderer = child.GetComponent<Renderer>();
+                                if (renderer != null)
+                                {
+                                    renderer.material = color;
+                                }
+                            }
                         }
                     }
                 }
@@ -124,10 +129,16 @@ public class CabinetColors : MonoBehaviour
             {
                 foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
                 {
-                    Transform doorsDrawers = item.Find("Doors_Drawers");
-                    if (doorsDrawers != null)
+                    foreach (Transform child in item.GetComponentsInChildren<Transform>())
                     {
-                        doorsDrawers.GetComponent<Renderer>().material = color;
+                        if (child.name == "Doors_Drawers")
+                        {
+                            Renderer renderer = child.GetComponent<Renderer>();
+                            if (renderer != null)
+                            {
+                                renderer.material = color;
+                            }
+                        }
                     }
                 }
             }
@@ -218,10 +229,16 @@ public class CabinetColors : MonoBehaviour
                 {
                     if (item.GetComponentInChildren<QuikOutline>().enabled)
                     {
-                        Transform doorsDrawers = item.Find("Handles");
-                        if (doorsDrawers != null)
+                        foreach (Transform child in item.GetComponentsInChildren<Transform>())
                         {
-                            doorsDrawers.GetComponent<Renderer>().material = color;
+                            if (child.name == "Handles")
+                            {
+                                Renderer renderer = child.GetComponent<Renderer>();
+                                if (renderer != null)
+                                {
+                                    renderer.material = color;
+                                }
+                            }
                         }
                     }
                 }
@@ -230,10 +247,16 @@ public class CabinetColors : MonoBehaviour
             {
                 foreach (Transform item in DoubleClickDetector.Instance.selectedWall.GetComponent<Wall>().wallCabinets)
                 {
-                    Transform doorsDrawers = item.Find("Handles");
-                    if (doorsDrawers != null)
+                    foreach (Transform child in item.GetComponentsInChildren<Transform>())
                     {
-                        doorsDrawers.GetComponent<Renderer>().material = color;
+                        if (child.name == "Handles") 
+                        {
+                            Renderer renderer = child.GetComponent<Renderer>();
+                            if (renderer != null)
+                            {
+                                renderer.material = color;
+                            }
+                        }
                     }
                 }
             }

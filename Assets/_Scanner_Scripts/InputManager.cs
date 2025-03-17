@@ -151,35 +151,35 @@ public class InputManager : MonoBehaviour
 
                 //Ray to center
                 Ray rayCenter   = new Ray(centerOrigin, direction);
-                //Debug.DrawRay(rayCenter.origin, direction * 100, Color.red);
+                Debug.DrawRay(rayCenter.origin, direction * 100, Color.red);
 
                 //Ray to top
                 Ray rayTop      = new Ray(topOrigin, direction);
-                //Debug.DrawRay(rayTop.origin, direction * 100, Color.blue);
+                Debug.DrawRay(rayTop.origin, direction * 100, Color.blue);
 
                 //Ray to bottom
                 Ray rayBottom   = new Ray(bottomOrigin, direction);
-  //                Debug.DrawRay(rayBottom.origin, direction * 100, Color.magenta);
+                Debug.DrawRay(rayBottom.origin, direction * 100, Color.magenta);
 
                 //Ray to right
                 Ray rayRight    = new Ray(rightOrigin, direction);
-  //              Debug.DrawRay(rayRight.origin, direction * 100, Color.cyan);
+                Debug.DrawRay(rayRight.origin, direction * 100, Color.cyan);
 
                 //Ray to left
                 Ray rayLeft     = new Ray(leftOrigin, direction);
-  //            Debug.DrawRay(rayLeft.origin, direction * 100, Color.green);
+                Debug.DrawRay(rayLeft.origin, direction * 100, Color.green);
 
                 Ray rayTopLeft  = new Ray(topLeftOrigin, direction);
-                //Debug.DrawRay(rayTopLeft.origin, direction * 100, Color.green);
+                Debug.DrawRay(rayTopLeft.origin, direction * 100, Color.green);
 
                 Ray rayTopRight = new Ray(topRightOrigin, direction);
-                //Debug.DrawRay(rayTopRight.origin, direction * 100, Color.green);
+                Debug.DrawRay(rayTopRight.origin, direction * 100, Color.green);
 
                 Ray rayBottomLeft = new Ray(bottomLeftOrigin, direction);
-                //Debug.DrawRay(rayBottomLeft.origin, direction * 100, Color.green);
+                Debug.DrawRay(rayBottomLeft.origin, direction * 100, Color.green);
 
                 Ray rayBottomRight = new Ray(bottomRightOrigin, direction);
-                //Debug.DrawRay(rayBottomRight.origin, direction * 100, Color.green);
+                Debug.DrawRay(rayBottomRight.origin, direction * 100, Color.green);
 
                 if (Physics.Raycast(rayCenter, out RaycastHit hitInfoCenter))
                 {
@@ -469,25 +469,25 @@ public class InputManager : MonoBehaviour
                 if (wallNormal == new Vector3(1, 0, 0))
                 {
                     preGeneratedItem.transform.forward  = Vector3.right;
-                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x - 0.35f, yPosition, cursorPositon.z);
+                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x - 0.4f, yPosition, cursorPositon.z);
                     //right
                 }
                 else if (wallNormal == new Vector3(-1, 0, 0))
                 {
                     preGeneratedItem.transform.forward  = Vector3.left;
-                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x + 0.35f, yPosition, cursorPositon.z);
+                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x + 0.4f, yPosition, cursorPositon.z);
                     //left
                 }
                 else if (wallNormal == new Vector3(0, 0, -1))
                 {
                     preGeneratedItem.transform.forward  = Vector3.back;
-                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x, yPosition, cursorPositon.z + 0.35f);
+                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x, yPosition, cursorPositon.z + 0.4f);
                     //backward
                 }
                 else if (wallNormal == new Vector3(0, 0, 1))
                 {
                     preGeneratedItem.transform.forward  = Vector3.forward;
-                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x, yPosition, cursorPositon.z - 0.35f);
+                    preGeneratedItem.transform.position = new Vector3(cursorPositon.x, yPosition, cursorPositon.z - 0.4f);
                     //forward
                 }
                 if (!isHighLightDisplayed)
@@ -505,6 +505,7 @@ public class InputManager : MonoBehaviour
                         outline.enabled = true;
                     }
                     preGeneratedItem.GetComponentInChildren<QuikOutline>().OutlineColor = Color.red;
+                    Debug.Log("2");
                 }
                 else if (!preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets && originPositon == null)
                 {

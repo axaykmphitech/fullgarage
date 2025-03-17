@@ -18,7 +18,7 @@ public class FileManager : MonoBehaviour
     public void OpenFileBrowser(byte[] file)
     {
         isSetUpWalls = false;
-        gltfAsset.LoadRoom(file);
+        gltfAsset.Load(file);
     }
 
     private void Update()

@@ -37,15 +37,16 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("uima");
         WebGLFileBrowser.FilesWereOpenedEvent += FilesWereOpenedEventHandler;
         WebGLFileBrowser.FileOpenFailedEvent  +=  FileOpenFailedEventHandler;
 
-#if !UNITY_EDITOR
-        openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
-#endif
-#if UNITY_EDITOR
-        RoomModelManager.Instance.gltfAsset.LoadOnStartup = true;
-#endif
+        #if !UNITY_EDITOR
+            openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
+        #endif
+        #if UNITY_EDITOR
+            RoomModelManager.Instance.gltfAsset.LoadOnStartup = true;
+        #endif 
     }
 
     private void OnDestroy()

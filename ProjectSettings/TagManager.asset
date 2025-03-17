@@ -13,6 +13,7 @@ TagManager:
   - overheads
   - worksurface
   - backsplash
+  - empty
   layers:
   - Default
   - TransparentFX

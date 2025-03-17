@@ -69,7 +69,25 @@ public class RoomModelManager : MonoBehaviour
         }
         foreach (Transform item in walls)
         {
-            item.gameObject.AddComponent<BoxCollider>();
+            BoxCollider boxCollider = item.gameObject.AddComponent<BoxCollider>();
+
+            if(IsNearlyForward(Vector3.forward, item.GetComponent<MeshFilter>().mesh.normals[0]))
+            {
+                boxCollider.size = new Vector3(boxCollider.size.x - 0.14f, boxCollider.size.y, boxCollider.size.z);
+            }
+            if(IsNearlyForward(Vector3.back, item.GetComponent<MeshFilter>().mesh.normals[0]))
+            {
+                boxCollider.size = new Vector3(boxCollider.size.x - 0.14f, boxCollider.size.y, boxCollider.size.z);
+            }
+            if (IsNearlyForward(Vector3.left, item.GetComponent<MeshFilter>().mesh.normals[0]))
+            {
+                boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, boxCollider.size.z - 0.14f);
+            }
+            if (IsNearlyForward(Vector3.right, item.GetComponent<MeshFilter>().mesh.normals[0]))
+            {
+                boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, boxCollider.size.z - 0.14f);
+            }
+            
             item.gameObject.AddComponent<Wall>();
         }
         foreach(Transform item in allWindows)
@@ -88,6 +106,13 @@ public class RoomModelManager : MonoBehaviour
         UIManager.Instance.loadingPanel. SetActive(false);
         UIManager.Instance.startMenu.    SetActive(false);
         UIManager.Instance.cabinetMenu.   SetActive(true);
+    }
+
+    bool IsNearlyForward(Vector3 value1, Vector3 value2, float threshold = 0.95f)
+    {
+        value1.Normalize();
+        float dot = Vector3.Dot(value1, value2);
+        return dot >= threshold;
     }
 
     public void SetupWalls()

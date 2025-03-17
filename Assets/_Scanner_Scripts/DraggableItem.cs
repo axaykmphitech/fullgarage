@@ -79,6 +79,7 @@ public class DraggableItem : MonoBehaviour
     {
         if(InputManager.Instance.preGeneratedItem == gameObject)
         {
+
             if (other.gameObject.tag.Equals("left") && !isCollidingWithOtherCabinets)
             {
                 currentSelectedPart = other.gameObject;
@@ -103,7 +104,7 @@ public class DraggableItem : MonoBehaviour
                 if (InputManager.Instance.isCabietOnWallRight && InputManager.Instance.isCabinetOnWallLeft && InputManager.Instance.isCabinetOnWallBottom && InputManager.Instance.isCabinetOnWallTop && InputManager.Instance.isCabinetOnWallCenter && InputManager.Instance.isCabinetOnWallTopLeft && InputManager.Instance.isCabinetOnWallTopRight && InputManager.Instance.isCabinetOnWallBottomLeft && InputManager.Instance.isCabinetOnWallBottomRight)
                 {
                     other.gameObject.GetComponent<Renderer>().material = GreenHighlightPart;
-                    GetComponentInChildren<QuikOutline>().OutlineColor =        Color.green;
+                    GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
                 }
             }
             if (other.gameObject.tag.Equals("right") && !isCollidingWithOtherCabinets)
@@ -142,10 +143,11 @@ public class DraggableItem : MonoBehaviour
                     GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
                 }
             }
-            if(other.gameObject.GetComponent<DraggableItem>())
+            if (other.gameObject.GetComponent<DraggableItem>())//other.gameObject.name.Contains("Empty")
             {
                 isCollidingWithOtherCabinets = true;
                 GetComponentInChildren<QuikOutline>().OutlineColor = Color.red;
+                Debug.Log("1");
             }
             if(other.gameObject.name.ToLower().Equals("window"))
             {

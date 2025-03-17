@@ -108,8 +108,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.27256513, y: 0.12, z: 0.9999999}
-  m_Center: {x: 0, y: 1.82, z: 1.688899e-16}
+  m_Size: {x: 0.27256513, y: 0.2, z: 0.9999999}
+  m_Center: {x: 0, y: 1.6, z: 1.688899e-16}
 --- !u!114 &4546947475948486423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,6 +1540,8 @@ MonoBehaviour:
   isGroundCabinet: 0
   isWallMount: 1
   isOverHead: 0
+  isWorksurface: 0
+  isBacksplash: 0
   isCollidingWithOtherCabinets: 0
   currentSelectedPart: {fileID: 0}
   OthersCabinetsPart: []
@@ -1559,6 +1561,14 @@ MonoBehaviour:
   - {fileID: 5676310793422728221}
   _60inOverheadHighlight: []
   _80inOverheadhighlight: []
+  _20inWorksurfaceHighlight: []
+  _40inWorksurfaceHighlight: []
+  _60inWorksurfaceHighlight: []
+  _80inWorksurfaceHighlight: []
+  _40inSink: []
+  _40inBacksplash: []
+  _60inBacksplash: []
+  _80inBacksplash: []
   YellowHighlightPart: {fileID: 2100000, guid: 6e88b2490b7b148e8b00f002e940ead2, type: 2}
   GreenHighlightPart: {fileID: 2100000, guid: 68f448d8b89094ba0a723ce81b6412ed, type: 2}
 --- !u!54 &7227464262078057616
@@ -1717,8 +1727,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.27256513, y: 0.12, z: 0.9999999}
-  m_Center: {x: 0, y: 1.82, z: 1.688899e-16}
+  m_Size: {x: 0.27256513, y: 0.2, z: 0.9999999}
+  m_Center: {x: 0, y: 1.6, z: 1.688899e-16}
 --- !u!114 &8566361467921539509
 MonoBehaviour:
   m_ObjectHideFlags: 0

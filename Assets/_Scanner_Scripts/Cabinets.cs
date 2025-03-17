@@ -33,6 +33,10 @@ public class Cabinets : MonoBehaviour
     public GameObject _60InchOverhead;
     public GameObject _80InchOverhead;
 
+    [Header("Corner Module")]
+    public GameObject CornerBaseLeft;
+    public GameObject CornerBaseRight;
+
     [Header("Applications")]
     public GameObject BeverageCenter;
     public GameObject        Freezer;
@@ -145,13 +149,33 @@ public class Cabinets : MonoBehaviour
                 case "Pantry":
                     prefabToInstantiate = Pantry;
                     break;
+
+
+                case "CornerBaseLeft":
+                    prefabToInstantiate = CornerBaseLeft;
+                    break;
+                case "CornerBaseRight":
+                    prefabToInstantiate = CornerBaseRight;
+                    break;
             }
+
 
             GameObject cabinet;
             InputManager.Instance.preGeneratedItem = cabinet = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
 
+            if(prefabToInstantiate == CornerBaseLeft)
+            {
+                Debug.Log("left cab");
+            }
+            if(prefabToInstantiate == CornerBaseRight)
+            {
+                Debug.Log("right cab");
+                InputManager.Instance.preGeneratedItem.transform.eulerAngles = new Vector3(0, 0, 0);
+                cabinet.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+
             Transform doorDrawers   =   cabinet.transform.Find("Doors_Drawers");
-            Transform handleDrawers = cabinet.transform.Find("Handle");
+            Transform handleDrawers =   cabinet.transform.Find("Handle");
 
             if (doorDrawers != null)
             {

@@ -524,8 +524,6 @@ public class DoubleClickDetector : MonoBehaviour
             textComponentH.color = Color.black;
             textComponentH.alignment = TextAnchor.MiddleCenter;
             AllDimensions.Add(textObjectH);
-
-
         }
         else
         {
