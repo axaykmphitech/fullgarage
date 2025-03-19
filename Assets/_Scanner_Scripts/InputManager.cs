@@ -655,18 +655,29 @@ public class InputManager : MonoBehaviour
                     {
                         if (!originPositon.name.ToLower().Contains("wallmount") && !originPositon.name.ToLower().Contains("overhead") && !originPositon.name.ToLower().Contains("worksurface") && !originPositon.name.ToLower().Contains("sink40") && !originPositon.name.ToLower().Contains("backsplash") && !isOutsideWall)
                         {
+                            int reverse = 1;
+                            if(originPositon.name.ToLower().Contains("reverse"))
+                            {
+                                Debug.Log(" Here :" + originPositon.name.ToLower());
+                                reverse = -1;
+                            }
+                            else
+                            {
+                                reverse = 1;
+                            }
+
                             float halfXSizeDraggingCabinet = 0;
                             Vector3 newPosition = Vector3.zero;
 
                             if (offsetMultiplier == Vector3.right || offsetMultiplier == Vector3.left)
                             {
                                 halfXSizeDraggingCabinet = preGeneratedItem.GetComponent<BoxCollider>().bounds.size.x / 2;
-                                newPosition = (new Vector3(originPositon.position.x, preGeneratedItem.transform.position.y, preGeneratedItem.transform.position.z)) + (offsetMultiplier * halfXSizeDraggingCabinet);
+                                newPosition = (new Vector3(originPositon.position.x, preGeneratedItem.transform.position.y, preGeneratedItem.transform.position.z)) + ((offsetMultiplier * halfXSizeDraggingCabinet) * reverse);
                             }
                             if (offsetMultiplier == Vector3.forward || offsetMultiplier == Vector3.back)
                             {
                                 halfXSizeDraggingCabinet = preGeneratedItem.GetComponent<BoxCollider>().bounds.size.z / 2;
-                                newPosition = (new Vector3(preGeneratedItem.transform.position.x, preGeneratedItem.transform.position.y, originPositon.position.z)) + (offsetMultiplier * halfXSizeDraggingCabinet);
+                                newPosition = (new Vector3(preGeneratedItem.transform.position.x, preGeneratedItem.transform.position.y, originPositon.position.z)) + ((offsetMultiplier * halfXSizeDraggingCabinet) * reverse);
                             }
                             preGeneratedItem.transform.position = newPosition;
                             if (!preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets)
@@ -768,6 +779,10 @@ public class InputManager : MonoBehaviour
             if (preGeneratedItem.name.Contains("RightWallMount20"))
             {
                 EnableWallmountOverheadHighlight("_20rightwallmount");
+            }
+            if (preGeneratedItem.name.Contains("CornerWallmount"))
+            {
+                EnableWallmountOverheadHighlight("cornerwallmount");
             }
         }
 
@@ -955,6 +970,32 @@ public class InputManager : MonoBehaviour
                                 if (draggableItem._20inRightWallMountHighlight.Length > 0)
                                 {
                                     foreach (var item in draggableItem._20inRightWallMountHighlight)
+                                    {
+                                        if (!item.GetComponent<ConnectedCheck>().isConnected)
+                                        {
+                                            item.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case "cornerwallmount":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem.cornerWallmountHighlight != null)
+                            {
+                                if (draggableItem.cornerWallmountHighlight.Length > 0)
+                                {
+                                    foreach (var item in draggableItem.cornerWallmountHighlight)
                                     {
                                         if (!item.GetComponent<ConnectedCheck>().isConnected)
                                         {
@@ -1311,6 +1352,17 @@ public class InputManager : MonoBehaviour
                     if (draggableItem._20inLeftWallMountHighlight.Length > 0)
                     {
                         foreach (var item in draggableItem._20inLeftWallMountHighlight)
+                        {
+                            item.SetActive(false);
+                        }
+                    }
+                }
+
+                if (draggableItem.cornerWallmountHighlight != null)
+                {
+                    if (draggableItem.cornerWallmountHighlight.Length > 0)
+                    {
+                        foreach (var item in draggableItem.cornerWallmountHighlight)
                         {
                             item.SetActive(false);
                         }

@@ -9,6 +9,7 @@ public class DraggableItem : MonoBehaviour
 {
     public bool              isGroundCabinet;
     public bool                  isWallMount;
+    public bool            isCornerWallMount;
     public bool                   isOverHead;
     public bool                isWorksurface;
     public bool                 isBacksplash;
@@ -24,6 +25,7 @@ public class DraggableItem : MonoBehaviour
     public GameObject[]      _40inWallMountHighlight;
     public GameObject[]  _20inLeftWallMountHighlight;
     public GameObject[] _20inRightWallMountHighlight;
+    public GameObject[]   cornerWallmountHighlight;
 
     [Space(15)]
     public GameObject[] _40inOverheadHighlight; 
@@ -35,6 +37,7 @@ public class DraggableItem : MonoBehaviour
     public GameObject[] _40inWorksurfaceHighlight;
     public GameObject[] _60inWorksurfaceHighlight;
     public GameObject[] _80inWorksurfaceHighlight;
+    public GameObject[] _62inWorksurfaceHighlight;
     public GameObject[] _40inSink;
 
     [Space(15)]
@@ -79,7 +82,6 @@ public class DraggableItem : MonoBehaviour
     {
         if(InputManager.Instance.preGeneratedItem == gameObject)
         {
-
             if (other.gameObject.tag.Equals("left") && !isCollidingWithOtherCabinets)
             {
                 currentSelectedPart = other.gameObject;
@@ -219,6 +221,10 @@ public class DraggableItem : MonoBehaviour
         {
             EnableWallmountHighlight("_20rightwallmount");
         }
+        if(gameObject.name.Contains("CornerWallmount"))
+        {
+            EnableWallmountHighlight("cornerwallmount");
+        }
     }
 
 
@@ -339,6 +345,29 @@ public class DraggableItem : MonoBehaviour
                             }
                         }
                     }   
+                }
+                break;
+            case "cornerwallmount":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != InputManager.Instance.preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem.cornerWallmountHighlight != null)
+                            {
+                                if (draggableItem.cornerWallmountHighlight.Length > 0)
+                                {
+                                    foreach (var item in draggableItem.cornerWallmountHighlight)
+                                    {
+                                        item.SetActive(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
         }

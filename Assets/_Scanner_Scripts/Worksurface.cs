@@ -16,6 +16,7 @@ public class Worksurface : MonoBehaviour
     public GameObject   stainlessSteel40;
     public GameObject   stainlessSteel60;
     public GameObject   stainlessSteel80;
+    public GameObject   stainlessSteel62;
     public GameObject stainlessSteelSink;
 
     [Header("Wood")]
@@ -23,6 +24,7 @@ public class Worksurface : MonoBehaviour
     public GameObject   mapleWood40;
     public GameObject   mapleWood60;
     public GameObject   mapleWood80;
+    public GameObject   mapleWood62;
     public GameObject mapleWoodSink;
 
     [Header("PowderCoated")]
@@ -30,6 +32,7 @@ public class Worksurface : MonoBehaviour
     public GameObject   powderCoated40;
     public GameObject   powderCoated60;
     public GameObject   powderCoated80;
+    public GameObject   powderCoated62;
     public GameObject powderCoatedSink;
 
     public void OpenStainlessSteelWS()
@@ -73,6 +76,9 @@ public class Worksurface : MonoBehaviour
                 case "Stainless80":
                     prefabToInstantiate = stainlessSteel80;
                     break;
+                case "Stainless62":
+                    prefabToInstantiate = stainlessSteel62;
+                    break;
                 case "StainlessSink":
                     prefabToInstantiate = stainlessSteelSink;
                     break;
@@ -90,6 +96,9 @@ public class Worksurface : MonoBehaviour
                 case "Maplewood80":
                     prefabToInstantiate = mapleWood80;
                     break;
+                case "Maplewood62":
+                    prefabToInstantiate = mapleWood62;
+                    break;
                 case "MaplewoodSink":
                     prefabToInstantiate = mapleWoodSink;
                     break;
@@ -106,6 +115,9 @@ public class Worksurface : MonoBehaviour
                     break;
                 case "PowderCoated80":
                     prefabToInstantiate = powderCoated80;
+                    break;
+                case "PowderCoated62":
+                    prefabToInstantiate = powderCoated62;
                     break;
                 case "PowderCoatedSink":
                     prefabToInstantiate = powderCoatedSink;
@@ -162,6 +174,11 @@ public class Worksurface : MonoBehaviour
                         case "powder_sink40":
                             Replace(item.gameObject, stainlessSteelSink);
                             break;
+                        case "maplewood62ws":
+                        case "powdercoated62ws":
+                            Replace(item.gameObject, stainlessSteel62);
+                            break;
+
                     }
                 }
             }
@@ -202,6 +219,10 @@ public class Worksurface : MonoBehaviour
                         case "powder_sink40":
                             Replace(item.gameObject, mapleWoodSink);
                             break;
+                        case "stainless62ws":
+                        case "powdercoated62ws":
+                            Replace(item.gameObject, mapleWood62);
+                            break;
                     }
                 }
             }
@@ -241,6 +262,10 @@ public class Worksurface : MonoBehaviour
                         case "maple_sink40":
                         case "stainless_sink40":
                             Replace(item.gameObject, powderCoatedSink);
+                            break;
+                        case "maplewood62ws":
+                        case "stainless62ws":
+                            Replace(item.gameObject, powderCoated62);
                             break;
                     }
                 }

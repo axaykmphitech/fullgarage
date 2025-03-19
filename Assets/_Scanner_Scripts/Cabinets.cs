@@ -36,6 +36,8 @@ public class Cabinets : MonoBehaviour
     [Header("Corner Module")]
     public GameObject CornerBaseLeft;
     public GameObject CornerBaseRight;
+    public GameObject CornerWallmountRight;
+    public GameObject CornerWallmountLeft;
 
     [Header("Applications")]
     public GameObject BeverageCenter;
@@ -157,6 +159,12 @@ public class Cabinets : MonoBehaviour
                 case "CornerBaseRight":
                     prefabToInstantiate = CornerBaseRight;
                     break;
+                case "CornerWallmountRight":
+                    prefabToInstantiate = CornerWallmountRight;
+                    break;
+                case "CornerWallmountLeft":
+                    prefabToInstantiate = CornerWallmountLeft;
+                    break;
             }
 
 
@@ -196,10 +204,10 @@ public class Cabinets : MonoBehaviour
 
             InputManager.Instance.preGeneratedItem.transform.SetParent(RoomModelManager.Instance.CabinetDesign);
             InputManager.Instance.isDragging = true;
-           
-//#if UNITY_EDITOR
-//            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
-//#endif
+
+#if UNITY_EDITOR
+            Selection.activeGameObject = InputManager.Instance.preGeneratedItem;
+#endif
 
         }
         else

@@ -1356,6 +1356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGroundCabinet: 1
   isWallMount: 0
+  isCornerWallMount: 0
   isOverHead: 0
   isWorksurface: 0
   isBacksplash: 0
@@ -1372,6 +1373,7 @@ MonoBehaviour:
   - {fileID: 1896408479125259477}
   _20inRightWallMountHighlight:
   - {fileID: 4392804757211364609}
+  cornerWallmountHighlight: []
   _40inOverheadHighlight: []
   _60inOverheadHighlight: []
   _80inOverheadhighlight: []
@@ -1824,7 +1826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1999716269052510319
 Transform:
   m_ObjectHideFlags: 0

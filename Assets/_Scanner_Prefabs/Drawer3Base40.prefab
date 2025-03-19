@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGroundCabinet: 1
   isWallMount: 0
+  isCornerWallMount: 0
   isOverHead: 0
   isWorksurface: 0
   isBacksplash: 0
@@ -118,6 +119,7 @@ MonoBehaviour:
   - {fileID: 7391231617441571467}
   _20inRightWallMountHighlight:
   - {fileID: 5122359821369338507}
+  cornerWallmountHighlight: []
   _40inOverheadHighlight: []
   _60inOverheadHighlight: []
   _80inOverheadhighlight: []
