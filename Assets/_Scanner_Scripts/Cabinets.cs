@@ -177,7 +177,6 @@ public class Cabinets : MonoBehaviour
             }
             if(prefabToInstantiate == CornerBaseRight)
             {
-                Debug.Log("right cab");
                 InputManager.Instance.preGeneratedItem.transform.eulerAngles = new Vector3(0, 0, 0);
                 cabinet.transform.eulerAngles = new Vector3(0, 0, 0);
             }

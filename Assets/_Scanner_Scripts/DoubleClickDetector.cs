@@ -90,7 +90,6 @@ public class DoubleClickDetector : MonoBehaviour
 
         if (targetObject == null)
         {
-            Debug.LogError("Target object is not assigned.");
             return;
         }
         isWallOpen = true;
@@ -280,7 +279,7 @@ public class DoubleClickDetector : MonoBehaviour
             canvas.sortingOrder = 40;
             Text textComponentH = textObjectH.AddComponent<Text>();
             textComponentH.enabled = UIManager.Instance.isDimensionsShow;
-            textComponentH.text = heightInInches.ToString("F1") + " in";
+            textComponentH.text = heightInInches.ToString("F1") + " in" ;
             textComponentH.font = dimensionFont;
             textComponentH.color =  Color.black;
             textComponentH.alignment = TextAnchor.MiddleCenter;
@@ -336,7 +335,7 @@ public class DoubleClickDetector : MonoBehaviour
             float CenterZ = 0;
             float offsetH = 0;
 
-            Transform leftMost = gameObjects[0];
+            Transform leftMost =  gameObjects[0];
             Transform rightMost = gameObjects[0];
 
             foreach (Transform obj in gameObjects)
@@ -538,7 +537,7 @@ public class DoubleClickDetector : MonoBehaviour
         return dot >= threshold;
     }
 
-    void DestroyAllCabinetMeasurement()
+    public void DestroyAllCabinetMeasurement()
     {
         GameObject[] objects = FindObjectsOfType<GameObject>();
 

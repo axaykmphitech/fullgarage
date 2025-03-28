@@ -18,8 +18,7 @@ public class MouseFollow : MonoBehaviour
         targetPosition = Cam.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10));
 
         //Set the position of targetObject
-        transform.position = new Vector3(targetPosition.x, targetPosition.y, targetPosition.z);
-                 
+        transform.position = new Vector3(targetPosition.x, targetPosition.y, targetPosition.z);         
     }
 
 }

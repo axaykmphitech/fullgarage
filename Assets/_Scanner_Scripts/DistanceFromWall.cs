@@ -1,19 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DistanceFromWall : MonoBehaviour
 {
+
     public static DistanceFromWall Instance;
     public Material lineMaterial;
     public Font dimensionFont;
+
+    public GameObject currentSelectedObject;
+    public GameObject tempObject;
 
     private void Awake()
     {
         Instance = this;
     }
-
-    public GameObject currentSelectedObject;
-    public GameObject tempObject;
 
     private void Update()
     {
@@ -195,4 +197,17 @@ public class DistanceFromWall : MonoBehaviour
         }
     }
 
+    public void DeleteObject()
+    {
+        if(currentSelectedObject)
+        {
+            currentSelectedObject.transform.position = new Vector3(1000,1000,1000);
+            currentSelectedObject.GetComponent<DraggableItem>().Dragging();
+            DoubleClickDetector.Instance.DestroyAllCabinetMeasurement();
+            DestroyAllFromCabinetToWallMeasurement();
+            Destroy(currentSelectedObject);
+            currentSelectedObject = null  ;
+            tempObject = null;
+        }
+    }
 }

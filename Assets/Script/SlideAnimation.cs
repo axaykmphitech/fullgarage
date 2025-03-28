@@ -31,13 +31,13 @@ public class SlideAnimation : MonoBehaviour
 
     void SlideLeft()
     {
-        targetRect.anchoredPosition = new Vector2(startPosition.x - slideDistance, startPosition.y);
+        targetRect.anchoredPosition = new Vector2(startPosition.x - slideDistance, startPosition.y) ;
         targetRect.DOAnchorPosX(startPosition.x, duration).SetEase(ease).OnComplete(MoveBackToStart);
     }
 
     void SlideRight()
     {
-        targetRect.anchoredPosition = new Vector2(startPosition.x + slideDistance, startPosition.y);
+        targetRect.anchoredPosition = new Vector2(startPosition.x + slideDistance, startPosition.y );
         targetRect.DOAnchorPosX(startPosition.x, duration).SetEase(ease).OnComplete(MoveBackToStart);
     }
 

@@ -17,8 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float RotationsSpeed = 5.0f;
 
-
-
     private void Start()
     {
         cameraOffset = transform.position - playerTransform.position;
@@ -27,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-
         if (rotatrAroundPlayer)
         {
             Quaternion camTurnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * RotationsSpeed,Vector3.up);
@@ -44,11 +41,4 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
-
-    private void Update()
-    {
-        
-    }
-
 }

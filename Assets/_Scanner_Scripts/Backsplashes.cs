@@ -8,18 +8,20 @@ public class Backsplashes : MonoBehaviour
     public GameObject Aluminium40;
     public GameObject Aluminium60;
     public GameObject Aluminium80;
+    public GameObject Aluminium22right;
+    public GameObject Aluminium22left ;
 
     [Header("Procore")]
     public GameObject Procore40;
     public GameObject Procore60;
     public GameObject Procore80;
+    public GameObject Procore22right;
+    public GameObject Procore22left ;
 
     private GameObject prefabToInstantiate;
 
     public Toggle aluminiumToggle;
     public Toggle   procoreToggle;
-
-
 
     public void SelectBacksplash(string name)
     {
@@ -36,8 +38,13 @@ public class Backsplashes : MonoBehaviour
                 case "Aluminium80":
                     prefabToInstantiate = Aluminium80;
                     break;
+                case "Aluminium22right":
+                    prefabToInstantiate = Aluminium22right;
+                    break;
+                case "Aluminium22left":
+                    prefabToInstantiate = Aluminium22left;
+                    break;
 
-                
                 case "Procore40":
                     prefabToInstantiate = Procore40;
                     break;
@@ -47,8 +54,14 @@ public class Backsplashes : MonoBehaviour
                 case "Procore80":
                     prefabToInstantiate = Procore80;
                     break;
+                case "Procore22right":
+                    prefabToInstantiate = Procore22right;
+                    break;
+                case "Procore22left":
+                    prefabToInstantiate = Procore22left;
+                    break;
             }
-
+            
             InputManager.Instance.preGeneratedItem = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
             InputManager.Instance.preGeneratedItem.transform.SetParent(RoomModelManager.Instance.CabinetDesign);
             InputManager.Instance.isDragging = true;
@@ -87,6 +100,12 @@ public class Backsplashes : MonoBehaviour
                         case "aluminium80bs":
                             Replace(item.gameObject, Procore80);
                             break;
+                        case "aluminium22bsright":
+                            Replace(item.gameObject, Procore22right);
+                            break;
+                        case "aluminium22bsleft":
+                            Replace(item.gameObject, Procore22left);
+                            break;
                     }
                 }
             }
@@ -115,6 +134,12 @@ public class Backsplashes : MonoBehaviour
                         case "procore80bs":
                             Replace(item.gameObject, Aluminium80);
                             break;
+                        case "procore22bsright":
+                            Replace(item.gameObject, Aluminium22right);
+                            break;
+                        case "procore22bsleft":
+                            Replace(item.gameObject, Aluminium22left);
+                            break;
                     }
                 }
             }
@@ -129,7 +154,7 @@ public class Backsplashes : MonoBehaviour
             return;
         }
 
-        Vector3 position    = before.transform.position;
+        Vector3 position    = before.transform.position;    
         Quaternion rotation = before.transform.rotation;
 
         GameObject afterInstance = Instantiate(afterPrefab, position, rotation);

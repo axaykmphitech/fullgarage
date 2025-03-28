@@ -997,7 +997,6 @@ namespace BuildReportTool
 					var stringBuilder = new StringBuilder();
 
 					stringBuilder.Append(pair.Key);
-
 					stringBuilder.Append(" used by:\n");
 
 					for (int n = 0, len = pair.Value.Users.Count; n < len; ++n)
@@ -1007,7 +1006,6 @@ namespace BuildReportTool
 						stringBuilder.Append(pair.Value.Users[n]);
 						stringBuilder.Append("\n");
 					}
-
 					Debug.Log(stringBuilder.ToString());
 				}
 			}

@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
     public List<Toggle> showDimentsionsToggle;
     public bool isDimensionsShow = true;
 
+    public List<Button> deleteButtons;
+
     private void Awake()
     {
         Instance = this;
@@ -37,7 +39,6 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("uima");
         WebGLFileBrowser.FilesWereOpenedEvent += FilesWereOpenedEventHandler;
         WebGLFileBrowser.FileOpenFailedEvent  +=  FileOpenFailedEventHandler;
 
@@ -135,9 +136,9 @@ public class UIManager : MonoBehaviour
     public void OpenBacksplashMenu()
     {
         cabinetMenu.SetActive(false);
-        colorMenu.SetActive(false);
-        worksurfaceMenu.SetActive(false);
-        backsplashMenu.SetActive (true);
+        colorMenu.SetActive(false)  ;
+        worksurfaceMenu.SetActive(false) ;
+        backsplashMenu.SetActive (true)  ;
     }
 
     private void FilesWereOpenedEventHandler(File[] files)
@@ -163,6 +164,15 @@ public class UIManager : MonoBehaviour
         WebGLFileBrowser.OpenFilePanelWithFilters(WebGLFileBrowser.GetFilteredFileExtensions(_enteredFileExtensions), false);
     }
 
+    /// <summary>
+    ///  New store listing design
+    ///  hard level at start
+    ///  more vehicles as reward
+    ///  controll ads from firebase
+    ///
+    ///  dancing doll prototype
+    /// </summary>
+    /// <param name="toggle"></param>
     public void ShowHideDimensions(Toggle toggle)
     {
         foreach (var item in showDimentsionsToggle)
@@ -175,6 +185,17 @@ public class UIManager : MonoBehaviour
 
         isDimensionsShow = toggle.isOn;
         DoubleClickDetector.Instance.ShowHideMeasurement(toggle.isOn);
+    }
+
+    private void Update()
+    {
+        foreach (Button btn in deleteButtons)
+        {
+            if (btn != null)
+            {
+                btn.interactable = DistanceFromWall.Instance.currentSelectedObject;
+            }
+        }
     }
 }
 

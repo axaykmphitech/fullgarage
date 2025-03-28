@@ -358,7 +358,6 @@ public class InputManager : MonoBehaviour
                 }
                 if (Physics.Raycast(rayTopRight, out RaycastHit hitInfoTopRight))
                 {
-                    //Debug.Log(hitInfoTopRight.collider.name, hitInfoTopRight.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
                         if (hitInfoTopRight.collider.name.Contains("wall") || hitInfoTopRight.collider.name.ToLower().Contains("worksurface") || hitInfoTopRight.collider.name.ToLower().Contains("sink40"))
@@ -387,7 +386,6 @@ public class InputManager : MonoBehaviour
                 }
                 if (Physics.Raycast(rayBottomLeft, out RaycastHit hitInfoBottomLeft))
                 {
-                    //Debug.Log(hitInfoBottomLeft.collider.name, hitInfoBottomLeft.collider.gameObject);
                     if (preGeneratedItem.name.ToLower().Contains("ws") || preGeneratedItem.name.ToLower().Contains("sink40"))
                     {
                         if (hitInfoBottomLeft.collider.name.Contains("wall") || hitInfoBottomLeft.collider.name.ToLower().Contains("worksurface") || hitInfoBottomLeft.collider.name.ToLower().Contains("sink40"))
@@ -505,7 +503,6 @@ public class InputManager : MonoBehaviour
                         outline.enabled = true;
                     }
                     preGeneratedItem.GetComponentInChildren<QuikOutline>().OutlineColor = Color.red;
-                    Debug.Log("2");
                 }
                 else if (!preGeneratedItem.GetComponent<DraggableItem>().isCollidingWithOtherCabinets && originPositon == null)
                 {
@@ -534,6 +531,7 @@ public class InputManager : MonoBehaviour
                                 originPositon = hit.collider.transform;
                                 preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart = hit.collider.gameObject;
                                 UpdateHighlightOverheads(hit.collider.gameObject);
+                                Debug.Log("4");
                             }
                         }
                         else
@@ -564,6 +562,7 @@ public class InputManager : MonoBehaviour
                                 originPositon = hit.collider.transform;
                                 preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart = hit.collider.gameObject;
                                 UpdateHighlightWorksurface(hit.collider.gameObject);
+                                Debug.Log("5");
                             }
                         }
                         else
@@ -594,6 +593,7 @@ public class InputManager : MonoBehaviour
                                 originPositon = hit.collider.transform;
                                 preGeneratedItem.GetComponent<DraggableItem>().currentSelectedPart = hit.collider.gameObject;
                                 UpdateHighlightBacksplashes(hit.collider.gameObject);
+                                Debug.Log("6");
                             }
                         }
                         else
@@ -736,7 +736,6 @@ public class InputManager : MonoBehaviour
             
             currentSelectedWall.wallCabinets.RemoveAll(obj => obj == null || obj.Equals(null));
         }
-
     }
 
     IEnumerator DisableOutlineAfterDelay(QuikOutline quikOutline)
@@ -819,6 +818,10 @@ public class InputManager : MonoBehaviour
             {
                 EnableWorksurfaceHighlight("_80WorkSurface");
             }
+            if(preGeneratedItem.name.Contains("Stainless62"))
+            {
+                EnableWorksurfaceHighlight("_62WorkSurface");
+            }
             if(preGeneratedItem.name.Contains("Sink"))
             {
                 EnableWorksurfaceHighlight("_40Sink");
@@ -840,6 +843,10 @@ public class InputManager : MonoBehaviour
             if (preGeneratedItem.name.Contains("Maplewood80"))
             {
                 EnableWorksurfaceHighlight("_80WorkSurface");
+            }
+            if (preGeneratedItem.name.Contains("Maplewood62"))
+            {
+                EnableWorksurfaceHighlight("_62WorkSurface");
             }
             if (preGeneratedItem.name.Contains("Sink"))
             {
@@ -863,6 +870,10 @@ public class InputManager : MonoBehaviour
             {
                 EnableWorksurfaceHighlight("_80WorkSurface");
             }
+            if (preGeneratedItem.name.Contains("PowderCoated62"))
+            {
+                EnableWorksurfaceHighlight("_62WorkSurface");
+            }
             if (preGeneratedItem.name.Contains("Sink"))
             {
                 EnableWorksurfaceHighlight("_40Sink");
@@ -883,6 +894,10 @@ public class InputManager : MonoBehaviour
             {
                 EnableBacksplashHighlight("_80Backsplash");
             }
+            if(preGeneratedItem.name.Contains("Aluminium22"))
+            {
+                EnableBacksplashHighlight("_22Backsplash");
+            }
             if (preGeneratedItem.name.Contains("Procore40"))
             {
                 EnableBacksplashHighlight("_40Backsplash");
@@ -894,6 +909,10 @@ public class InputManager : MonoBehaviour
             if (preGeneratedItem.name.Contains("Procore80"))
             {
                 EnableBacksplashHighlight("_80Backsplash");
+            }
+            if(preGeneratedItem.name.Contains("Procore22"))
+            {
+                EnableBacksplashHighlight("_22Backsplash");
             }
         }
         isHighLightDisplayed = true;
@@ -1202,6 +1221,33 @@ public class InputManager : MonoBehaviour
                 }
                 break;
 
+            case "_62WorkSurface":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._62inWorksurfaceHighlight != null)
+                            {
+                                if (draggableItem._62inWorksurfaceHighlight.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._62inWorksurfaceHighlight)
+                                    {
+                                        if (!item.GetComponent<ConnectedCheck>().isConnected)
+                                        {
+                                            item.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+
             case "_40Sink":
                 foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
                 {
@@ -1301,6 +1347,32 @@ public class InputManager : MonoBehaviour
                                 if (draggableItem._80inBacksplash.Length > 0)
                                 {
                                     foreach (var item in draggableItem._80inBacksplash)
+                                    {
+                                        if (!item.GetComponent<ConnectedCheck>().isConnected)
+                                        {
+                                            item.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case "_22Backsplash":
+                foreach (Transform cabinet in RoomModelManager.Instance.CabinetDesign)
+                {
+                    if (cabinet.gameObject != preGeneratedItem)
+                    {
+                        DraggableItem draggableItem = cabinet.GetComponent<DraggableItem>();
+
+                        if (draggableItem != null)
+                        {
+                            if (draggableItem._22inBacksplash != null)
+                            {
+                                if (draggableItem._22inBacksplash.Length > 0)
+                                {
+                                    foreach (var item in draggableItem._22inBacksplash)
                                     {
                                         if (!item.GetComponent<ConnectedCheck>().isConnected)
                                         {
@@ -1495,6 +1567,17 @@ public class InputManager : MonoBehaviour
                     if (draggableItem._80inBacksplash.Length > 0)
                     {
                         foreach (var item in draggableItem._80inBacksplash)
+                        {
+                            item.SetActive(false);
+                        }
+                    }
+                }
+
+                if (draggableItem._22inBacksplash != null)
+                {
+                    if (draggableItem._22inBacksplash.Length > 0)
+                    {
+                        foreach (var item in draggableItem._22inBacksplash)
                         {
                             item.SetActive(false);
                         }

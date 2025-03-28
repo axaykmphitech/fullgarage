@@ -44,10 +44,11 @@ public class DraggableItem : MonoBehaviour
     public GameObject[] _40inBacksplash;
     public GameObject[] _60inBacksplash;
     public GameObject[] _80inBacksplash;
+    public GameObject[] _22inBacksplash;
 
     [Space(15)]
     public Material YellowHighlightPart;
-    public Material GreenHighlightPart;
+    public Material GreenHighlightPart ;
 
     private float lastClickTime = 0f;
     private float doubleClickThreshold = 0.3f;
@@ -65,6 +66,7 @@ public class DraggableItem : MonoBehaviour
         GetComponentInChildren<QuikOutline>().enabled = true;
         GetComponentInChildren<QuikOutline>().OutlineColor = Color.yellow;
         DistanceFromWall.Instance.currentSelectedObject = gameObject;
+        Debug.Log(gameObject);
 
         float currentTime = Time.time;
 
@@ -76,6 +78,14 @@ public class DraggableItem : MonoBehaviour
             UpdateConnections();
         }
         lastClickTime = currentTime;
+    }
+
+    public void Dragging()
+    {
+        InputManager.Instance.preGeneratedItem = gameObject;
+        InputManager.Instance.isDragging = true;
+        InputManager.Instance.originPositon = null;
+        UpdateConnections();
     }
 
     private void OnTriggerStay(Collider other)
@@ -145,11 +155,10 @@ public class DraggableItem : MonoBehaviour
                     GetComponentInChildren<QuikOutline>().OutlineColor = Color.green;
                 }
             }
-            if (other.gameObject.GetComponent<DraggableItem>())//other.gameObject.name.Contains("Empty")
+            if (other.gameObject.GetComponent<DraggableItem>())
             {
                 isCollidingWithOtherCabinets = true;
                 GetComponentInChildren<QuikOutline>().OutlineColor = Color.red;
-                Debug.Log("1");
             }
             if(other.gameObject.name.ToLower().Equals("window"))
             {
@@ -315,6 +324,7 @@ public class DraggableItem : MonoBehaviour
                                 {
                                     foreach (var item in draggableItem._20inLeftWallMountHighlight)
                                     {
+                                        Debug.Log(item);
                                         item.SetActive(true);
                                     }
                                 }
@@ -339,6 +349,7 @@ public class DraggableItem : MonoBehaviour
                                 {
                                     foreach (var item in draggableItem._20inRightWallMountHighlight)
                                     {
+                                        Debug.Log(item);
                                         item.SetActive(true);
                                     }
                                 }
@@ -362,6 +373,7 @@ public class DraggableItem : MonoBehaviour
                                 {
                                     foreach (var item in draggableItem.cornerWallmountHighlight)
                                     {
+                                        Debug.Log(item);
                                         item.SetActive(true);
                                     }
                                 }

@@ -108,7 +108,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5748, y: 0.10255614, z: 0.5588}
+  m_Size: {x: 1.5748, y: 0.10255614, z: 0.5304483}
   m_Center: {x: 0.2794, y: 0.05127807, z: 0}
 --- !u!114 &187268235531872833
 MonoBehaviour:
@@ -144,6 +144,7 @@ MonoBehaviour:
   _40inWorksurfaceHighlight: []
   _60inWorksurfaceHighlight: []
   _80inWorksurfaceHighlight: []
+  _62inWorksurfaceHighlight: []
   _40inSink: []
   _40inBacksplash: []
   _60inBacksplash: []

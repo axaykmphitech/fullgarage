@@ -17,6 +17,8 @@ public class PageTool : MonoBehaviour
     //}
 #else
     public static void ActivateFullscreen()
-	{ }
+	{
+
+    }
 #endif
 }

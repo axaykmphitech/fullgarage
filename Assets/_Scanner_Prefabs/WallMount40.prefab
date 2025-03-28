@@ -707,6 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGroundCabinet: 0
   isWallMount: 1
+  isCornerWallMount: 0
   isOverHead: 0
   isWorksurface: 0
   isBacksplash: 0
@@ -724,6 +725,7 @@ MonoBehaviour:
   _20inRightWallMountHighlight:
   - {fileID: 1466057827799313970}
   - {fileID: 3634901384399685450}
+  cornerWallmountHighlight: []
   _40inOverheadHighlight:
   - {fileID: 8254481188829752501}
   - {fileID: 6385143026235277680}
@@ -739,10 +741,12 @@ MonoBehaviour:
   _40inWorksurfaceHighlight: []
   _60inWorksurfaceHighlight: []
   _80inWorksurfaceHighlight: []
+  _62inWorksurfaceHighlight: []
   _40inSink: []
   _40inBacksplash: []
   _60inBacksplash: []
   _80inBacksplash: []
+  _22inBacksplash: []
   YellowHighlightPart: {fileID: 2100000, guid: 6e88b2490b7b148e8b00f002e940ead2, type: 2}
   GreenHighlightPart: {fileID: 2100000, guid: 68f448d8b89094ba0a723ce81b6412ed, type: 2}
 --- !u!65 &3935515259828789165

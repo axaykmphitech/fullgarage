@@ -37,7 +37,7 @@ public class Worksurface : MonoBehaviour
 
     public void OpenStainlessSteelWS()
     {
-        stainlessSteelWorksurface.SetActive(true);
+        stainlessSteelWorksurface.SetActive(true) ;
         powderCoatedWorksurface.  SetActive(false);
         maplewoodWorksurface.     SetActive(false);
     }
@@ -178,7 +178,6 @@ public class Worksurface : MonoBehaviour
                         case "powdercoated62ws":
                             Replace(item.gameObject, stainlessSteel62);
                             break;
-
                     }
                 }
             }

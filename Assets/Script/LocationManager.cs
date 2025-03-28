@@ -35,7 +35,7 @@ public class LocationManager : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogWarning("Failed to get country name: " + www.error);
+            //Debug.LogWarning("Failed to get country name: " + www.error);
 
             if (PlayerPrefs.HasKey("Country"))
                 Country = PlayerPrefs.GetString("Country", "");
@@ -46,13 +46,13 @@ public class LocationManager : MonoBehaviour
             if (PlayerPrefs.HasKey("Reign"))
                 ReignCode = PlayerPrefs.GetString("Reign", "");
 
-            Debug.Log(Country + " " + CountryCode + "  " + ReignCode);
+            //Debug.Log(Country + " " + CountryCode + "  " + ReignCode);
         }
         else
         {
             string response = www.downloadHandler.text;
             JSONNode itemsData =  JSON.Parse(response);
-            Debug.Log(response);
+            //Debug.Log(response);
 
             Country = itemsData["location"]["country"]["name"];
             CountryCode = itemsData["location"]["country"]["code"];
@@ -61,6 +61,8 @@ public class LocationManager : MonoBehaviour
             PlayerPrefs.SetString("Country", Country);
             PlayerPrefs.SetString("CountryCode", CountryCode);
             PlayerPrefs.SetString("Reign", ReignCode);
+
+            Debug.Log("Respose: " + response);
         }
     }
 }

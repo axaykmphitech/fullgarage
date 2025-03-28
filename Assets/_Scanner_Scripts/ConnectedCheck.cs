@@ -25,21 +25,21 @@ public class ConnectedCheck : MonoBehaviour
             Vector3 direction = Vector3.down;
             centerOrigin = bounds.center;
 
-            topLeftOrigin = centerOrigin + new Vector3(-bounds.extents.x, bounds.extents.y, -bounds.extents.z);
-            topRightOrigin = centerOrigin + new Vector3(bounds.extents.x, bounds.extents.y, -bounds.extents.z);
+            topLeftOrigin = centerOrigin  + new Vector3(-bounds.extents.x, bounds.extents.y, -bounds.extents.z);
+            topRightOrigin = centerOrigin + new Vector3(bounds.extents.x, bounds.extents.y, -bounds.extents.z) ;
 
-            float dotRight = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.right);
-            float dotLeft = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
+            float dotRight =   Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.right);
+            float dotLeft =    Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
             float dotForward = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.forward);
-            float dotBack = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.back);
+            float dotBack =    Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.back);
 
             if (Mathf.Abs(dotRight - 1f) < 0.01f || Mathf.Abs(dotLeft - 1f) < 0.01f)
             {
                 leftOrigin =  centerOrigin - new Vector3(0, 0, bounds.extents.z - 0.01f);
                 rightOrigin = centerOrigin + new Vector3(0, 0, bounds.extents.z - 0.01f);
 
-                topLeftOrigin =  leftOrigin + new  Vector3(0,  bounds.extents.y + 0.05f, 0);
-                topRightOrigin = rightOrigin + new Vector3(0, bounds.extents.y + 0.05f, 0);
+                topLeftOrigin =   leftOrigin + new  Vector3(0,  bounds.extents.y + 0.05f, 0);
+                topRightOrigin = rightOrigin + new  Vector3(0, bounds.extents.y + 0.05f, 0);
             }
 
             if (Mathf.Abs(dotForward - 1f) < 0.01f || Mathf.Abs(dotBack - 1f) < 0.01f)
@@ -57,7 +57,7 @@ public class ConnectedCheck : MonoBehaviour
             Ray rayTopRightWs = new Ray(topRightOrigin, direction);
             Debug.DrawRay(rayTopRightWs.origin, direction * 100, Color.green);
 
-            isWsLeftTouchWs = false;
+            isWsLeftTouchWs = false ;
             isWsRightTouchWs = false;
 
             if (Physics.Raycast(rayTopLeftWs, out RaycastHit hitInfoTopLeftWs))
@@ -125,7 +125,7 @@ public class ConnectedCheck : MonoBehaviour
             topRightOrigin = centerOrigin + new Vector3(bounds.extents.x, bounds.extents.y, -bounds.extents.z);
 
             float dotRight = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.right);
-            float dotLeft = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
+            float dotLeft =  Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.left);
             float dotForward = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.forward);
             float dotBack = Vector3.Dot(InputManager.Instance.wallNormal.normalized, Vector3.back);
 
@@ -178,10 +178,6 @@ public class ConnectedCheck : MonoBehaviour
                             isCurrentObject = true;
                         }
                     }
-
-                    //Debug.Log(gameObject.name, gameObject);
-                    //Debug.Log(hitInfoTopLeftBs.collider.gameObject, hitInfoTopLeftBs.collider.gameObject);
-                    //Debug.Log(hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs") + " " + isCurrentObject);
                     if (hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() && !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs") || isCurrentObject)
                     {
                         isBsLeftTouchBs = true;
@@ -189,9 +185,6 @@ public class ConnectedCheck : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log(gameObject.name, gameObject);
-                    //Debug.Log(hitInfoTopLeftBs.collider.gameObject, hitInfoTopLeftBs.collider.gameObject);
-                    //Debug.Log(hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs"));
                     if (hitInfoTopLeftBs.collider.GetComponent<DraggableItem>() && !hitInfoTopLeftBs.collider.gameObject.name.ToLower().Contains("bs"))
                     {
                         isBsLeftTouchBs = true;
@@ -211,9 +204,7 @@ public class ConnectedCheck : MonoBehaviour
                             isCurrentObject = true;
                         }
                     }
-                    //Debug.Log(gameObject.name, gameObject);
-                    //Debug.Log(hitInfoTopRightBs.collider.gameObject, hitInfoTopRightBs.collider.gameObject);
-                    //Debug.Log(hitInfoTopRightBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs") + " " + isCurrentObject);
+                    
                     if (hitInfoTopRightBs.collider.GetComponent<DraggableItem>() && !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs") || isCurrentObject)
                     {
                         isBsRightTouchBs = true;
@@ -221,17 +212,13 @@ public class ConnectedCheck : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log(gameObject.name, gameObject);
-                    //Debug.Log(hitInfoTopRightBs.collider.gameObject, hitInfoTopRightBs.collider.gameObject);
-                    //Debug.Log(hitInfoTopRightBs.collider.GetComponent<DraggableItem>() + " " + !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs"));
+                    
                     if (hitInfoTopRightBs.collider.GetComponent<DraggableItem>() && !hitInfoTopRightBs.collider.gameObject.name.ToLower().Contains("bs"))
                     {
                         isBsRightTouchBs = true;
                     }
                 }
             }
-            //Debug.Log("right " + isBsLeftTouchBs + " left " + isBsRightTouchBs, gameObject);
-            //gameObject.SetActive(isBsLeftTouchBs && isBsRightTouchBs);
         }
     }
 
@@ -239,7 +226,9 @@ public class ConnectedCheck : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<DraggableItem>() && InputManager.Instance.preGeneratedItem != other.gameObject)
+        {
             gameObject.SetActive(false);
+        }
 
         if (gameObject.tag.Equals("overheads") && InputManager.Instance.preGeneratedItem != other.gameObject)
         {
@@ -265,15 +254,11 @@ public class ConnectedCheck : MonoBehaviour
         //    }
         //}
 
-        if (gameObject.tag.Equals("backsplash"))
-        {
-            //Debug.Log(other.gameObject.name.ToLower(), other.gameObject);
-            //if (other.GetComponent<DraggableItem>() && (other.gameObject.name.ToLower().Contains("bs") || other.gameObject.tag.Equals("backsplash")))
-            //{
-                Debug.Log("make false", other.gameObject);
-                gameObject.SetActive(false);
-            //}
-        }
+        //if (gameObject.tag.Equals("backsplash"))
+        //{
+        //     Debug.Log("make false", other.gameObject);
+        //     gameObject.SetActive(false);
+        //}
     }
 
     private void OnTriggerStay(Collider other)

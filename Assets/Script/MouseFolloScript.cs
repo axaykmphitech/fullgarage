@@ -14,17 +14,17 @@ public class MouseFolloScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("---ecv----");
+        //print("---ecv----");
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
     }
 
     private void OnMouseDown()
     {
-        print("------OnMouseDown--->>>>>");
+        //print("------OnMouseDown--->>>>>");
     }
     private void OnMouseDrag()
     {
-        print("-----OnMouseDrag---->>>>>>");
+        //print("-----OnMouseDrag---->>>>>>");
     }
    
 }

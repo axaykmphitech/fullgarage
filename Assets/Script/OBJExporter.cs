@@ -208,6 +208,7 @@ public class OBJExporter : MonoBehaviour
 					int idx2 = tris[t] + 1 + lastIndex;
 					int idx1 = tris[t + 1] + 1 + lastIndex;
 					int idx0 = tris[t + 2] + 1 + lastIndex;
+
 					if (faceOrder < 0)
 					{
 						sb.AppendLine("f " + ConstructOBJString(idx2) + " " + ConstructOBJString(idx1) + " " + ConstructOBJString(idx0));

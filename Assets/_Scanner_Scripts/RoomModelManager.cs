@@ -102,7 +102,6 @@ public class RoomModelManager : MonoBehaviour
         backsplashYPosition =   floorPositionY +  1.218f ;
         cabinetCenterPosition = floorPositionY +  0.5f   ;
 
-
         UIManager.Instance.loadingPanel. SetActive(false);
         UIManager.Instance.startMenu.    SetActive(false);
         UIManager.Instance.cabinetMenu.   SetActive(true);
