@@ -2,48 +2,45 @@ using UnityEngine;
 
 public class QuadDrawer : MonoBehaviour
 {
-    public GameObject quadPrefab;
+    public GameObject quadPrefab; // Assign your quad prefab in the inspector
     private GameObject currentQuad;
-    private Vector3 startPoint;
-    private Vector3 endPoint;
-    private bool isDrawing;
+    private Vector3 startMousePosition;
+    private Vector3 endMousePosition;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            startPoint = GetMouseWorldPosition();
-            currentQuad = Instantiate(quadPrefab, startPoint, Quaternion.identity);
-            currentQuad.transform.localScale = Vector3.zero;
-            isDrawing = true;
+            startMousePosition = GetMouseWorldPosition();
+            currentQuad = Instantiate(quadPrefab, Vector3.zero, Quaternion.identity);
+            currentQuad.transform.SetParent(transform);
         }
 
-        if (Input.GetMouseButton(0) && isDrawing)
-        {   
-            endPoint = GetMouseWorldPosition();
-            UpdateQuad(currentQuad, startPoint, endPoint);
-        }
-
-        if (Input.GetMouseButtonUp(0) && isDrawing)
+        if (Input.GetMouseButton(0) && currentQuad != null)
         {
-            isDrawing = false;
+            endMousePosition = GetMouseWorldPosition();
+            UpdateQuad();
+        }
+
+        if (Input.GetMouseButtonUp(0) && currentQuad != null)
+        {
+            currentQuad = null; 
         }
     }
 
     Vector3 GetMouseWorldPosition()
     {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 10f; 
-        return Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = Camera.main.nearClipPlane; // Set the Z to near clip plane. Adjust if needed.
+        return Camera.main.ScreenToWorldPoint(mousePosition);
     }
 
-    void UpdateQuad(GameObject quad, Vector3 start, Vector3 end)
-    {   
-        Vector3 center = (start + end) / 2;
-        quad.transform.position =   center;
-        
-        Vector3 size = new Vector3(Mathf.Abs(start.x - end.x), Mathf.Abs(start.y - end.y), 1);
-        quad.transform.localScale = new Vector3(size.x, size.y, 1);
+    void UpdateQuad()
+    {
+        Vector3 center = (startMousePosition + endMousePosition) / 2f;
+        Vector3 size = new Vector3(Mathf.Abs(endMousePosition.x - startMousePosition.x), Mathf.Abs(endMousePosition.y - startMousePosition.y), 1f); // Z is 1, adjust as needed
+        currentQuad.transform.position = center;
+        currentQuad.transform.localScale = size;
     }
 }
 

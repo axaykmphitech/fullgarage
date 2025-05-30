@@ -35,13 +35,14 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
         isDimensionsShow = true;
+        Debug.unityLogger.logEnabled = false;
     }
 
     private void Start()
     {
         WebGLFileBrowser.FilesWereOpenedEvent += FilesWereOpenedEventHandler;
         WebGLFileBrowser.FileOpenFailedEvent  +=  FileOpenFailedEventHandler;
-
+        
         #if !UNITY_EDITOR
             openFileDialogButton.onClick.AddListener(OpenFileDialogButtonOnClickHandler);
         #endif

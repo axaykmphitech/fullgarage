@@ -566,6 +566,7 @@ PlayerSettings:
     iPhone: 1
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality: []
+  m_BuildTargetGroupHDRCubemapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding: []
@@ -843,6 +844,7 @@ PlayerSettings:
     EmbeddedLinux: FG_WEBGLFB;CT_FB;CT_PROC;CT_UI;CT_FB_DEMO
     GameCoreScarlett: FG_WEBGLFB
     GameCoreXboxOne: UNITY_POST_PROCESSING_STACK_V2;FG_WEBGLFB;CT_FB;CT_PROC;CT_UI;CT_FB_DEMO
+    Kepler: FG_WEBGLFB
     LinuxHeadlessSimulation: UNITY_POST_PROCESSING_STACK_V2;FG_WEBGLFB
     Nintendo Switch: UNITY_POST_PROCESSING_STACK_V2;FG_WEBGLFB;CT_FB;CT_PROC;CT_UI;CT_FB_DEMO
     PS4: UNITY_POST_PROCESSING_STACK_V2;FG_WEBGLFB;CT_FB;CT_PROC;CT_UI;CT_FB_DEMO
